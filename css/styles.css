@@ -1,0 +1,39 @@
+@charset="utf-8";
+
+/*
+
+	This stylesheet will make some browser reset and general
+	adjustments that I usually do anyways.
+	2017, Henrik (Jeppesen@tutanota.com)
+
+ */
+
+html {
+	height: 100%;
+	width : 100%;
+}
+
+body {
+	width     : 100%;
+	overflow-y: scroll;
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+/* Reset all margin and padding */
+* {
+	margin : 0;
+	padding: 0;
+}
+
+/* Fix Image Sizes */
+img {
+	height: auto !important;
+	width : 100%;
+}
+
+/* Collapse table border */
+table, td {
+	border-collapse: collapse;
+}

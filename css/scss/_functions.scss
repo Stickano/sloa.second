@@ -1,0 +1,48 @@
+
+// From WebHelpers
+// https://Github.com/stickano/webhelpers 
+
+// Box Shadows
+// $hosh    (horizontal shadow)     2px
+// $vesh    (vertical shadow)       2px
+// $blur    (blur effect)           2px
+// $spread  (blur spread)           2px
+// $color   (color hex)             #fff
+@mixin box-shadow($hosh, $vesh, $blur, $spread, $color) {
+    -webkit-box-shadow: $hosh, $vesh, $blur, $spread, $color;
+            box-shadow: $hosh, $vesh, $blur, $spread, $color;
+}
+
+// Transition
+// $trans   (transition-type)   background-color
+// $ms      (milliseconds)      150ms
+// $curve   (speed curve)       ease
+@mixin transition($trans, $ms) {
+    -webkit-transition: $trans $ms;
+            transition: $trans $ms;
+}
+@mixin transition-curve($trans, $ms, $curve) {
+    -webkit-transition: $trans $ms $curve;
+            transition: $trans $ms $curve;
+}
+@mixin transition-double-curve($trans, $ms, $curve, $trans2, $ms2, $curve2) {
+    -webkit-transition: $trans $ms $curve, $trans2 $ms2 $curve2;
+            transition: $trans $ms $curve, $trans2 $ms2 $curve2;
+}
+
+// Rotate
+// $deg (degrees)   90deg
+@mixin rotate($deg) {
+    -webkit-transform: rotate($deg);
+            transform: rotate($deg);
+}
+
+// User Select
+// $val     (value)     none
+@mixin user-select($val) {
+    -webkit-user-select: $val;
+       -moz-user-select: $val;
+        -ms-user-select: $val;
+            user-select: $val;
+}
+

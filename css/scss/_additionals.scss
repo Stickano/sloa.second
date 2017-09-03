@@ -1,0 +1,28 @@
+
+@import 'constants';
+
+.font-headline {
+    font-family: $headline;
+}
+
+.font-special {
+    font-family: $special;
+}
+
+.font-paragraph {
+    font-family: $paragraph;
+}
+
+.content {
+    flex: 1;
+}
+
+a.white-link {
+    &:hover, &:active, &:link, &:visited {
+        color: $white;
+    }
+}
+
+.white-txt {
+    color: $white;
+}
