@@ -63,7 +63,7 @@ class mailer {
 	 * @return  Unsets session
 	 */
 	public function resetMail(){
-		if($this->session->get('MailSuccess'))
+		if($this->session->isset('MailSuccess'))
 			$this->session->unset('MailSuccess');
 	}
 
@@ -104,7 +104,7 @@ class mailer {
 			$eRR = $this->noValidMail." ";
 
 		# Confirm that all inputs has been filled
-		if(empty($subject) || empty($message))
+		if(empty($subject) || empty($message) || empty($sender))
 			$eRR .= $this->missingFields;
 
 		# Break and send back, with a message, if an error occurred

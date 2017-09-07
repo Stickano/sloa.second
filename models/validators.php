@@ -19,9 +19,9 @@ class validators {
 	 * @return bool        true/false
 	 */
 	function valInt($input) {
-		if(!filter_var($input, FILTER_VALIDATE_INT))
-			return false;
-		return true;
+		if (filter_var($input, FILTER_VALIDATE_INT) || filter_var($input, FILTER_VALIDATE_INT) === 0)
+			return true;
+		return false;
 	}
 
 	/**

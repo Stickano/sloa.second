@@ -5,8 +5,8 @@ class connection extends mysqli {
 	public function __construct($host, $username, $password, $database) {
 		parent::__construct($host, $username, $password, $database);
 	
-	if(mysqli_connect_error())
-		die('Connection Error: '.mysqli_errno().': '.mysqli_connect_error());
+        if(mysqli_connect_error())
+            die('Connection Error: '.mysqli_errno().': '.mysqli_connect_error());
 	}
 }
 

@@ -38,11 +38,6 @@
     echo'<meta name="robot" content="'.$meta->getFollow().'"/>';
     echo'<meta name="viewport" content="width=device-width, initial-scale=0.8">';
 
-    # Stylesheets
-    echo'<link href="css/styles.css" rel="stylesheet">';
-    echo'<link href="css/helpers.css" rel="stylesheet">';
-    echo'<link href="css/additionals.css" rel="stylesheet">';
-
     # Additional Fonts (Google)
     echo'<link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Bellefair|Handlee" rel="stylesheet">';
 
@@ -52,4 +47,9 @@
 
     # JQuery
     echo'<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>';
+
+    # Stylesheets
+    echo'<link href="css/styles.css" rel="stylesheet">';
+    echo'<link href="css/helpers.css" rel="stylesheet">';
+    echo'<link href="css/additionals.css" rel="stylesheet">';
 ?>
