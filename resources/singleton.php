@@ -91,6 +91,18 @@ final class Singleton {
         return $spaces;
     }
 
+    /**
+     * Returns the current URL address
+     * @return string URL
+     */
+    public function getUrl(){
+        $qs = null;
+        if(!empty($_SERVER['QUERY_STRING']))
+            $qs = "?".$_SERVER['QUERY_STRING'];
+        $url = $_SERVER['PHP_SELF'].$qs;
+        return $url;
+    }
+
 }
 
 ?>
