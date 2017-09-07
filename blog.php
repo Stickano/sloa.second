@@ -10,51 +10,84 @@ echo'<body>';
 # The top menu bar
 require_once('resources/menu.php');
 
+$result = $controller->getPosts();
+$alt = "Article Image";
+$br = 0;
+
 # Content
 echo'<div class="row content">';
     echo'<div class="col-2 no-mobile"></div>';
     echo'<div class="col-8">';
 
         echo'<div class="row">';
-            # Fetch the articles
-            $result = $controller->getPosts();
-            $alt = "Article Image";
-            $br = 0;
-            foreach ($result as $key) {
-                
-                $br++;
-                $txt = strip_tags($key['txt']);
-                $txt = substr(($txt), 0, 400);
 
-                # Fetch image (if any)
-                $image = $controller->getImages($key['id']);
+            # Individual articles
+            if($key = $controller->checkId()){
 
-                echo'<div class="col-6 blogPosts">';
-                    echo'<div class="blogImageDiv">';
-                        # Place image (if any)
-                        if($image) {
-                            # Shorten the txt div
-                            $col = 7;
-                            # Change alt text if available
-                            if($image['txt'])
-                                $alt = $image['txt'];
-
-                            echo'<img src="'.$image['file'].'" alt="'.$alt.'" class="blogImage"/>';
-                        }
-                    echo'</div>';
-
-                    // TODO: Strip breaks
-
-                    echo '<h4 class="headline">'.$key['headline'].'</h4>';
-                    echo '<p class="paragraph">'.$txt.'</p>';
+                echo'<div class="col-12">';
+                    echo'<a href="" title="Forrige side">Tilbage</a>';
                 echo'</div>';
 
-                # start new row after 3 articles
-                if($br == 2){
-                    $br = 0;
-                    echo'</div><div class="row">';
+                echo'<div class="col-12">';
+                    if(!empty($key['file'])){
+                        echo'<img src="'.$key['file'].'" 
+                                    class="articleImage" 
+                                    alt="'.$key['imageAlt'].'"/>';
+                    }
+
+                    echo '<h1 class="headline">'.$key['headline'].'</h1>';
+                    echo '<p class="paragraph">'.$key['txt'].'</p>';
+                    echo'<br>';
+                echo'</div>';
+                
+                // $idDec = $b64->decode($_GET['id']);
+                // $postId = array_search($idDec, array_column($result, 'id'));
+                // if($postId >= 0)
+                //     $post = $result[$postId];
+                // else
+                //     header("location:blog.php");
+
+                // echo $post['headline'];
+                // echo $post['txt'];
+                
+            # All articles
+            } else {
+                
+                # Fetch the articles
+                foreach ($result as $key) { 
+
+                    $br++;
+                    $txt = strip_tags($key['txt']);
+                    $txt = substr($txt, 0, 400);
+                    
+                    # Alternative image text (if any)
+                    if (!empty($key['imageAlt']))
+                        $alt = $key['imageAlt'];
+                    
+                    echo'<div class="col-6 blogPosts">';
+                        echo'<div class="blogImageDiv">';
+                            # Print the image (if any)
+                            if (!empty($key['file']))
+                                 echo'<img src="'.$key['file'].'" 
+                                            alt="'.$alt.'" 
+                                            class="blogImage"/>';
+                        echo'</div>';
+
+                        echo'<a href="blog.php?id='.$controller->encodeId($key['id']).'" 
+                                title="Åben artikel">';
+                            echo '<h4 class="headline">'.$key['headline'].'</h4>';
+                        echo'</a>';
+                        echo '<p class="paragraph">'.$txt.'</p>';
+                    echo'</div>';
+
+                    # start new row after 3 articles
+                    if($br == 2){
+                        $br = 0;
+                        echo'</div><div class="row">';
+                    }
                 }
             }
+
         echo'</div>';
 
     echo'</div>';

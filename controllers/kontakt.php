@@ -25,10 +25,7 @@ class kontaktController{
 
     # Values for the view
     private $error;
-    private $formValues = array("name" => "send",
-                                "value" => "Send",
-                                "color" => "blue",
-                                "disabled" => null);
+    private $formValues = array();
 
     public function __construct(connection $conn, crud $db, SessionsHandler $session){
         
@@ -52,12 +49,22 @@ class kontaktController{
         $this->mailer->setIllegibleMail('Ugyldig Email!');
 
         # View values
+        # $this->formValues 
+
         self::getError();
         self::getFormValues();
         self::getMail();
         self::getSubject();
         self::getMessage();
 
+    }
+
+    /**
+     * Allows one to send a new message
+     * @return  unsets the MailSuccess session
+     */
+    public function resetMail(){
+        $this->mailer->resetMail();
     }
 
     /**
@@ -82,10 +89,15 @@ class kontaktController{
      */
     public function getFormValues(){
         if($this->session->isset('MailSuccess')){
-            $this->formValues["name"] = "resset";
+            $this->formValues["name"] = "reset";
             $this->formValues["value"] = "Send ny besked!";
             $this->formValues["color"] = "yellow";
             $this->formValues["disabled"] = "disabled";
+        } else {
+            $this->formValues["name"] = "send";
+            $this->formValues["value"] = "Send!";
+            $this->formValues["color"] = "blue";
+            $this->formValues["disabled"] = null;
         }
         return $this->formValues;
     }
@@ -141,14 +153,6 @@ class kontaktController{
     }
 
     /**
-     * Allows one to send a new message
-     * @return  unsets the MailSuccess session
-     */
-    public function resetMail(){
-        $this->mailer->resetMail();
-    }
-
-    /**
      * Sends the message via the contact form
      * @return null/Exception Returns exception on fail
      */
@@ -159,17 +163,16 @@ class kontaktController{
         $txt = $_POST['message'];
 
         if(!empty($mail))
-            $_SESSION['mail'] = $mail;
+            $this->session->set('mail', $mail);
         if(!empty($subject))
-            $_SESSION['subject'] = $subject;
+            $this->session->set('subject', $subject);
         if(!empty($txt))
-            $_SESSION['message'] = $txt;
+            $this->session->set('message', $txt);
 
         try {
             # The mailer will sanitize and validate
             $this->mailer->mail($mail, $subject, $txt);
-        }
-        catch(Exception $e){
+        } catch (Exception $e){
             $this->session->set('mailError', $e->getMessage());
         }
 

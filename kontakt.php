@@ -18,7 +18,8 @@ if(isset($_POST['send']))
 
 # Nulstil (send ny besked)
 if(isset($_POST['reset']))
-    $controller->resetMail();
+    $session->unset("MailSuccess");
+    #$controller->resetMail();
 
 # Form values (send or reset)
 $val = $controller->getFormValues();
@@ -39,19 +40,39 @@ echo'<div class="row content">';
                         # Display error (if any)
                         if($session->isset('mailError'))
                             echo'<div class="warning bg-red">'.$controller->getError().'</div>';
-
                         // TODO: Fix - maybe db message? Icon?
                         # Display success (if any)
-                        if($session->isset('MailSuccess'))
+                        elseif($session->isset('MailSuccess'))
                             echo'<div class="warning bg-green">Det\' er modtaget!</div>';
+                        else
+                            echo'<div class="warning bg-lightblue"><b>Bemærk:</b> Alle felter skal udfyldes!</div>';
 
                         # Contact formula
                         echo'<form method="post">';
-                            echo'<input style="width:100%;" type="text" name="mail" class="input-simple" placeholder="Din E-mail" value="'.$controller->getMail().'" '.$val['disabled'].'>';
-                            echo'<input style="width:100%;" type="text" name="subject" class="input-simple" placeholder="Emne" value="'.$controller->getSubject().'" '.$val['disabled'].'>';
-                            echo'<textarea class="input-textarea" style="width:100%; height:400px;" name="message"  '.$val['disabled'].'>'.$controller->getMessage().'</textarea>';
+                            echo'<input style="width:100%;" 
+                                        type="text" 
+                                        name="mail" 
+                                        class="input-simple" 
+                                        placeholder="Din E-mail" 
+                                        value="'.$controller->getMail().'" '.$val['disabled'].'>';
+                            
+                            echo'<input style="width:100%;" 
+                                        type="text" 
+                                        name="subject" 
+                                        class="input-simple" 
+                                        placeholder="Emne" 
+                                        value="'.$controller->getSubject().'" '.$val['disabled'].'>';
+                            
+                            echo'<textarea class="input-textarea" 
+                                            style="width:100%; height:400px;" 
+                                            name="message"  '.$val['disabled'].'>'.$controller->getMessage().'</textarea>';
+                            
                             //TODO: Icon
-                            echo'<input type="submit" value="'.$val['value'].'" class="input-button bg-'.$val['color'].' right" style="width:50%;" name="'.$val['name'].'">';
+                            echo'<input type="submit" 
+                                        value="'.$val['value'].'" 
+                                        class="input-button bg-'.$val['color'].' right" 
+                                        style="width:50%;" 
+                                        name="'.$val['name'].'">';
                         echo'</form>';
                         
                     echo'</div>';

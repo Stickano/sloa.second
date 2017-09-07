@@ -79,4 +79,13 @@ a.sloaButton:active, a.sloaButton:visited, a.sloaButton:link {
   overflow: hidden;
   margin-bottom: 85px; }
 
+.articleImage {
+  max-width: 50%;
+  float: left;
+  margin: 0 2em 2em 0; }
+
+@media (max-width: 1100px) {
+  .articleImage {
+    max-width: 100%; } }
+
 /*# sourceMappingURL=additionals.css.map */
