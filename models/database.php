@@ -16,9 +16,23 @@ class crud{
      * @param  string $orderBy Which row to order by
      * @param  string $order   ASC/DESC
      * @param  int    $limit   Result limie
+     *
+     * # Possible to create a JOIN query string as well
+     * @param  string    $join      LEFT, RIGHT or INNER
+     * @param  string    $joinVal   The JOIN clauses
+     * @param  string    $on        JOIN clause criterias
+     * 
      * @return array           Return results in an array
      */
-    public function recieve($data, $from, $where=null, $orderBy=null, $order=null, $limit=null){
+    public function recieve($data, 
+                            $from, 
+                            $where=null, 
+                            $orderBy=null, 
+                            $order=null, 
+                            $limit=null, 
+                            $join=null, 
+                            $joinVal=null, 
+                            $on=null){
 
         # Secure the inputs
         $data = mysqli_real_escape_string($this->conn, $data);
@@ -29,6 +43,18 @@ class crud{
         if($where != null){
             $where = mysqli_real_escape_string($this->conn, $where);
             $where = 'WHERE '.$where;
+        }
+
+        # Build join
+        $join = strtolower($join);
+        if($join == "inner" || $join == "right" || $join == "left"){
+            $joinVal = mysqli_real_escape_string($this->conn, $joinVal);
+            $on = mysqli_real_escape_string($this->conn, $on);
+            $join = strtoupper($join);
+            $join = $join." JOIN ".$joinVal." ON ".$on;
+            $where = null; # There shouldn't be a where clause if join
+        }else{
+            $join = null;
         }
 
         # Format the SQL order value
@@ -44,7 +70,7 @@ class crud{
             $limit = null;
 
         # Build and run the query
-        $sql = "SELECT ".$data." FROM ".$from." ".$where." ".$order." ".$limit;
+        $sql = "SELECT ".$data." FROM ".$from." ".$where." ".$join." ".$order." ".$limit;
         $query = $this->conn->query($sql);
 
         # Return the SQL error if any
