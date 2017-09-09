@@ -3,10 +3,11 @@
 @session_start();
 require_once('models/connection.php');
 require_once('models/database.php');
-require_once('resources/credentials.php');
 require_once('models/time.php');
 require_once('models/meta.php');
+require_once('models/security.php');
 require_once('resources/sessionHandler.php');
+require_once('resources/credentials.php');
 
 final class Singleton {
 
@@ -15,6 +16,7 @@ final class Singleton {
     # database connection
     private static $conn;  
     private static $crud;
+    private static $security;
 
     # Some typical classes
     public static $time;
@@ -46,9 +48,11 @@ final class Singleton {
             self::getPage();
 
             self::$time = new time();
+            self::$security = new security();
             self::$meta = new PageMeta(self::conn(), self::db(), self::$page);
             self::$session = SessionsHandler::init();
-
+            
+            self::setHttps();
             self::setPage();
             self::pageController();
         }
@@ -68,6 +72,13 @@ final class Singleton {
             $search = array_values($search);
             self::$page = $search[0];
         }
+    }
+
+    /**
+     * This will use the HTTPS (Re)connect method in the security class
+     */
+    private static function setHttps(){
+        self::$security->SecureConnect();
     }
 
     /**
