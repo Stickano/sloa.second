@@ -1,5 +1,17 @@
 <?php
 
+# Change the active page link color
+$blogStyle = null;
+$godmodeStyle = null;
+$infoStyle = null;
+$kontaktStyle = null;
+$portfolioStyle = null;
+$preGodmodeStyle = null;
+$servicesStyle = null;
+
+if($singleton::$page != 'index')
+    ${$singleton::$page.'Style'} = "menuButtonSelected";
+
 echo'<div class="row">';
     echo'<div class="col-2 no-mobile"></div>';
     echo'<div class="col-8 menuRow font-special">';
@@ -11,15 +23,15 @@ echo'<div class="row">';
 
         # Buttons (right)
         echo'<div class="no-mobile right" style="padding-top:.3%;">';
-            echo'<a href="blog.php" title="" class="menuButton">Blog</a>';
+            echo'<a href="?blog" title="" class="menuButton '.$blogStyle.'">Blog</a>';
             echo $singleton->spaces(4);
-            echo'<a href="info.php" title="" class="menuButton">Info</a>';
+            echo'<a href="?info" title="" class="menuButton '.$infoStyle.'">Info</a>';
             echo $singleton->spaces(4);
-            echo'<a href="portfolio.php" title="" class="menuButton">Portfolio</a>';
+            echo'<a href="?portfolio" title="" class="menuButton '.$portfolioStyle.'">Portfolio</a>';
             echo $singleton->spaces(4);
-            echo'<a href="services.php" title="" class="menuButton">Services</a>';
+            echo'<a href="?services" title="" class="menuButton '.$servicesStyle.'">Services</a>';
             echo $singleton->spaces(4);
-            echo'<a href="kontakt.php" title="" class="menuButton">Kontakt</a>';
+            echo'<a href="?kontakt" title="" class="menuButton '.$kontaktStyle.'">Kontakt</a>';
         echo'</div>';
 
     echo'</div>';

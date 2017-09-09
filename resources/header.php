@@ -2,31 +2,17 @@
     # This document handles meta/head data
     # This document should be loaded once per page
 
-    @session_start();
 
     # Singleton
     require_once('resources/singleton.php');
     $singleton = Singleton::init();
 
-    # Session Handler
-    require_once('resources/sessionHandler.php');
-    $session = SessionsHandler::init();
+    # Shortcut for some commonly used classes
+    $controller = $singleton::$controller;
+    $meta = $singleton::$meta;
+    $session = $singleton::$session;
 
-    # Load controller
-    if(is_file('controllers/'.$singleton->controller(1))){
-        require_once('controllers/'.$singleton->controller(1));
-        $controller = $singleton->controller();
-        $controller = new $controller($singleton->conn(), $singleton->db(), $session);
-    }
-
-    # Load a few general models
-    require_once('models/time.php');
-    $time = new time();
-
-    # Set meta data
-    require_once('models/meta.php');
-    $meta = new PageMeta($singleton->conn(), $singleton->db());
-
+    # Meta
     echo'<title>'.$meta->getTitle().'</title>';
     echo'<link rel="alternate" href="https://sloa.dk" hreflang="dk" />';
     echo'<meta charset="utf-8">';

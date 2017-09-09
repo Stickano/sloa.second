@@ -131,7 +131,7 @@ class crud{
         $where = mysqli_real_escape_string($this->conn, $where);
 
         # Build and run query
-        $sql = "UPDATE ".$table." SET ".$data." WHERE".$where."";
+        $sql = "UPDATE ".$table." SET ".$data." WHERE ".$where."";
         $query = $this->conn->query($sql);
 
         # Return the SQL error if any

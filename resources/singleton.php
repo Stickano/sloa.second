@@ -1,34 +1,82 @@
 <?php
 
+@session_start();
 require_once('models/connection.php');
 require_once('models/database.php');
-require('resources/credentials.php');
+require_once('resources/credentials.php');
 require_once('models/time.php');
 require_once('models/meta.php');
+require_once('resources/sessionHandler.php');
 
 final class Singleton {
+
+    private static $instance;
 
     # database connection
     private static $conn;  
     private static $crud;
-    // const host = '';
-    // const user = '';
-    // const pass = '';
-    // const db = '';
+
+    # Some typical classes
+    public static $time;
+    public static $meta;
+    public static $session;
+
+    # View and Controller
+    public static $page;
+    public static $controller;
 
     # Private constructor to ensure it won't be initialized
     private function __construct(){}
 
-    # Return the instance
-    private static $instance;
+    /**
+     * This is the initializer for this object
+     * It will initialize a Connection and CRUD class
+     * It will determine which View to load and its apropriate Controller
+     * It will store the page you hit (nowPage), along with storing the previous page (prePage)
+     * And it will initialize a couple of typical classes, like meta and time (used in footer) 
+     * @return object This (only) instance 
+     */
     public static function init(){
         if(!isset(self::$instance)){
+
             self::$instance = new self();
+            
             self::setConn();
             self::setDb();
+            self::getPage();
+
+            self::$time = new time();
+            self::$meta = new PageMeta(self::conn(), self::db(), self::$page);
+            self::$session = SessionsHandler::init();
+
+            self::setPage();
+            self::pageController();
         }
 
         return self::$instance;
+    }
+
+    /**
+     * This will determine which page(view) to load
+     */
+    private static function getPage(){
+        $pages = ['index','blog','info','portfolio','services','kontakt'];
+        $search = array_intersect($pages, array_keys($_GET));
+        self::$page = $pages[0];
+
+        if($search){
+            $search = array_values($search);
+            self::$page = $search[0];
+        }
+    }
+
+    /**
+     * This will load the appropriate controller
+     */
+    public static function pageController(){
+        require_once('controllers/'.self::$page.'.php');
+        $controller = ucfirst(self::$page).'Controller';
+        self::$controller = new $controller(self::conn(), self::db(), self::$session); 
     }
 
     /**
@@ -65,20 +113,6 @@ final class Singleton {
     }
 
     /**
-     * Method to determine which controller to load
-     * @param  int    $file Passing 1 will return the filename
-     * @return string       Return the controller class name or filename
-     */
-    public function controller($file=null){
-        $page = basename($_SERVER['PHP_SELF']);
-        if($file == 1)
-            return $page;
-        $page = ucfirst($page);
-        $page = substr($page, 0, -4);
-        return $page."Controller";
-    }
-
-    /**
      * Will generate '&nbsp;'  
      * @param  int    $count The amount of spaces 
      * @return string        The spaces
@@ -103,6 +137,14 @@ final class Singleton {
         return $url;
     }
 
+    /**
+     * Sets the current and previous page for navigation purposes
+     */
+    private static function setPage() {
+        if (self::$session->isset("nowPage") && self::$session->get("nowPage") != self::$instance->getUrl())
+            self::$session->set("prePage", self::$session->get("nowPage"));
+        self::$session->set("nowPage", self::$instance->getUrl());
+    }
 }
 
 ?>

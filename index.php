@@ -14,7 +14,10 @@ require_once('resources/menu.php');
 echo'<div class="row content">';
 	echo'<div class="col-2 no-mobile"></div>';
 	echo'<div class="col-8">';
-        echo $controller->getMessage();
+
+        # This will load the appropriate view
+        require_once('views/'.$singleton::$page.'.php');
+
 	echo'</div>';
 	echo'<div class="col-2 no-mobile"></div>';
 echo'</div>';

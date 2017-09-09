@@ -25,6 +25,7 @@ class kontaktController{
 
     # Values for the view
     private $error;
+    private $success;
     private $formValues = array();
 
     public function __construct(connection $conn, crud $db, SessionsHandler $session){
@@ -47,16 +48,6 @@ class kontaktController{
         $this->mailer->setServerMail('noreply@sloa.dk');
         $this->mailer->setMissingFields('Der mangler noget!');
         $this->mailer->setIllegibleMail('Ugyldig Email!');
-
-        # View values
-        # $this->formValues 
-
-        self::getError();
-        self::getFormValues();
-        self::getMail();
-        self::getSubject();
-        self::getMessage();
-
     }
 
     /**
@@ -115,41 +106,21 @@ class kontaktController{
     }
 
     /**
-     * These next 3 are from storing the values once you use the contact form
-     * so that you don't have to re-type the values in the form.
+     * The values typed in the form are saved and returned
+     * @return array Values from previous attempts
      */
-    /**
-     * Returns the senders address (if any)
-     * @return strin The sender of the contact form
-     */
-    public function getMail(){
-        if($this->session->isset('mail')){
-            $this->mailFrom = $this->session->get('mail');
-            $this->session->unset('mail');
-        }
-        return $this->mailFrom;
-    }
-    /**
-     * Returns the subject of the contact form
-     * @return string The subject
-     */
-    public function getSubject(){
-        if($this->session->isset('subject')){
-            $this->subject = $this->session->get('subject');
-            $this->session->unset('subject');
-        }
-        return $this->subject;
-    }
-    /**
-     * Returns the message from the contact form
-     * @return string The message
-     */
-    public function getMessage(){
-        if($this->session->isset('message')){
-            $this->message = $this->session->get('message');
-            $this->session->unset('message');
-        }
-        return $this->message;
+    public function getFailedValues() {
+        $values = [
+            'mail' => $this->session->get('mail'), 
+            'subject' => $this->session->get('subject'), 
+            'txt' => $this->session->get('message') 
+        ]; 
+    
+        $this->session->unset('mail');
+        $this->session->unset('subject');
+        $this->session->unset('message');
+
+        return $values;
     }
 
     /**
@@ -162,23 +133,22 @@ class kontaktController{
         $subject = $_POST['subject'];
         $txt = $_POST['message'];
 
-        if(!empty($mail))
-            $this->session->set('mail', $mail);
-        if(!empty($subject))
-            $this->session->set('subject', $subject);
-        if(!empty($txt))
-            $this->session->set('message', $txt);
+        $this->session->set('mail', $mail);
+        $this->session->set('subject', $subject);
+        $this->session->set('message', $txt);
 
         try {
             # The mailer will sanitize and validate
             $this->mailer->mail($mail, $subject, $txt);
-        } catch (Exception $e){
+        } catch (Exception $e) {
             $this->session->set('mailError', $e->getMessage());
         }
 
         # Update the contacted value
-        $this->used++;
-        $this->db->update('contact', 'contacted='.$this->used, 'id=1');
+        if (!$this->session->isset('mailError')){
+            $this->used++;
+            $this->db->update('contact', 'contacted='.$this->used, 'id=1');
+        }
 
     }
 }

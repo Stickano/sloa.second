@@ -15,23 +15,23 @@ class PageMeta {
     private $conn;
     private $db;
 
-    public function __construct(connection $conn, crud $db){
+    public function __construct(connection $conn, crud $db, string $page){
 
         $this->conn = $conn;
         $this->db = $db;
         
         # Select the page to fetch meta for
         $files = scandir('controllers');
-        $check = basename($_SERVER['PHP_SELF']);
-        if(in_array($check, $files)){
-            $this->where = strtolower(basename($_SERVER['PHP_SELF'], ".php")."=1");
+        $check = strtolower($page.".php");
+        if(in_array($check, $files))
+            $this->where = substr($check, 0, -4)."=1";
 
-            # The naming in the db is a bit off (EN/DA)
-            if($this->where == 'index=1')
-                $this->where = 'main=1';
-            if($this->where == 'kontakt=1')
-                $this->where = 'contact=1';
-        }
+        # The naming in the db is a bit off (EN/DA)
+        if($this->where == 'index=1')
+            $this->where = 'main=1';
+        if($this->where == 'kontakt=1')
+            $this->where = 'contact=1';
+        
 
         # Set the variables
         $result = $this->db->recieve($this->data, $this->from, $this->where);

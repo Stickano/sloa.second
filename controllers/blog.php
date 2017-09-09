@@ -77,7 +77,7 @@ class BlogController{
         if ($search || $search === 0) {
             $result = $this->posts[$search];
             $imageAlt = "Blog Billede";
-            if(!empty($result['file']))
+            if(!empty($result['imageAlt']))
                 $imageAlt = $result['imageAlt'];
             $result['imageAlt'] = $imageAlt;
             return $result;

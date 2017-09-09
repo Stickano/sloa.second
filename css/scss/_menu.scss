@@ -1,5 +1,4 @@
 @import 'constants';
-@import 'functions';
 
 a.menuButton:active,a.menuButton:visited,a.menuButton:link{
   color: $black-light;
@@ -9,6 +8,10 @@ a.menuButton:active,a.menuButton:visited,a.menuButton:link{
 a.menuButton:hover{
     color: $pink;
     transition: color .15s ease-in-out;
+}
+
+a.menuButtonSelected:active,a.menuButtonSelected:visited,a.menuButtonSelected:link  {
+    color: $pink;
 }
 
 a.sloaButton:active,a.sloaButton:visited,a.sloaButton:link{
