@@ -2,11 +2,9 @@
 
 # Change the active page link color
 $blogStyle = null;
-$godmodeStyle = null;
 $infoStyle = null;
 $kontaktStyle = null;
 $portfolioStyle = null;
-$preGodmodeStyle = null;
 $servicesStyle = null;
 
 if($singleton::$page != 'index')
