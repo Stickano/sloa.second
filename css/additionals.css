@@ -62,25 +62,14 @@ a.sloaButton:active, a.sloaButton:visited, a.sloaButton:link {
   color: #2a2025;
   border-bottom: 1px solid #2a2025; }
 
-.blogImageDiv {
-  width: 100%;
-  height: 400px;
-  max-height: 400px;
-  border: 1px solid #1A1A1A;
-  margin: 0; }
+.postsDiv {
+  border-left: 3px solid #5bc0de;
+  margin-left: 5%;
+  border-bottom: 1px solid #eee;
+  border-right: 1px solid #eee; }
 
-.blogImage {
-  width: 100%;
-  height: 400px;
-  max-height: 400px;
-  border-bottom: 1px solid #1A1A1A;
-  margin: 0; }
-
-.blogPosts {
-  height: 800px;
-  max-height: 800px;
-  overflow: hidden;
-  margin-bottom: 85px; }
+.postDivTop {
+  border-top: 1px solid #eee; }
 
 .articleImage {
   max-width: 50%;

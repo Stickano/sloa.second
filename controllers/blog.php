@@ -18,15 +18,15 @@ class BlogController{
         $this->b64 = new base64();
         $this->val = new validators();
 
-        $this->posts = self::getPosts();
+        self::setPosts();
         self::checkId();
     }
 
     /**
-     * Returns an array of all the blog posts
+     * Sets an array with all the blog posts
      * @return array Blog posts from db
      */
-    public function getPosts() {
+    private function setPosts() {
         $result = $this->db->recieve("blog.*, media.file, media.txt AS imageAlt",
                                      "blog", 
                                      null, 
@@ -36,7 +36,15 @@ class BlogController{
                                      "LEFT", 
                                      "media", 
                                      "blog.id=media.mid AND media.blog=1"); 
-        return $result;
+        $this->posts = $result;
+    }
+
+    /**
+     * Returns the array with all the blog posts
+     * @return [type] [description]
+     */
+    public function getPosts() {
+        return $this->posts;
     }
 
     /**

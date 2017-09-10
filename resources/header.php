@@ -11,6 +11,7 @@
     $controller = $singleton::$controller;
     $meta = $singleton::$meta;
     $session = $singleton::$session;
+    $time = $singleton::$time;
 
     # Meta
     echo'<title>'.$meta->getTitle().'</title>';

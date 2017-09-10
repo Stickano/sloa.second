@@ -54,6 +54,51 @@ class time {
     		$mess = "Goodnight";
     	return $mess;
     }
+
+    public function getMonth(int $val){
+        switch ($val) {
+            case 1:
+                $month = "Januar";
+                break;
+            case 2:
+                $month = "Februar";
+                break;
+            case 3:
+                $month = "Marts";
+                break;
+            case 4:
+                $month = "April";
+                break;
+            case 5:
+                $month = "Maj";
+                break;
+            case 6:
+                $month = "Juni";
+                break;
+            case 7:
+                $month = "July";
+                break;
+            case 8:
+                $month = "August";
+                break;
+            case 9:
+                $month = "September";
+                break;
+            case 10:
+                $month = "Oktober";
+                break;
+            case 11:
+                $month = "November";
+                break;
+            case 12:
+                $month = "December";
+                break;
+            default:
+                $month = null;
+        }
+
+        return $month;
+    }
 }
 
 ?>

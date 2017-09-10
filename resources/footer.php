@@ -76,7 +76,7 @@ echo'<div class="row">';
         # Bottom © and social
         $result = $singleton->db()->recieve('*', 'socialmedia');
         echo'<div style="width:100%; padding-bottom:.5%;">';
-            echo'<span style="font-size:75%;">© '.$singleton::$time->timestamp('year').'</span>';
+            echo'<span style="font-size:75%;">© '.$time->timestamp('year').'</span>';
             echo'<div class="right">';
                 foreach ($result as $key) {
                     if($key['active'] == true){
