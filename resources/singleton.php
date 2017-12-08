@@ -64,7 +64,7 @@ final class Singleton {
      * This will determine which page(view) to load
      */
     private static function getPage(){
-        $pages = ['index','blog','info','portfolio','services','kontakt'];
+        $pages = ['index','blog','info','portfolio','guider','kontakt', 'pregodmode', 'godmode'];
         $search = array_intersect($pages, array_keys($_GET));
         self::$page = $pages[0];
 

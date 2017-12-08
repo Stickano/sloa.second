@@ -10,38 +10,108 @@ class BlogController{
     private $b64;
     private $val;
 
-    private $posts = array();
+    # View values
+    private $posts         = array();
+    private $forwardButton = array();
+    private $lessButton    = array();
+    private $jumpTo        = 1;
+    private $pageAmount    = 6;
 
     public function __construct(connection $conn, crud $db){
         $this->conn = $conn;
-        $this->db = $db;
-        $this->b64 = new base64();
-        $this->val = new validators();
+        $this->db   = $db;
+        $this->b64  = new base64();
+        $this->val  = new validators();
 
+        self::checkPageAmount();
         self::setPosts();
         self::checkId();
     }
 
-    /**
-     * Sets an array with all the blog posts
-     * @return array Blog posts from db
-     */
+
     private function setPosts() {
-        $result = $this->db->recieve("blog.*, media.file, media.txt AS imageAlt",
-                                     "blog", 
-                                     null, 
-                                     "blog.id", 
-                                     "DESC", 
-                                     null, 
-                                     "LEFT", 
-                                     "media", 
-                                     "blog.id=media.mid AND media.blog=1"); 
+        $page = self::checkPage();
+        $posts = $this->pageAmount * $page;
+        echo $posts;
+        $result = $this->db->receive("blog.*, media.file, media.txt AS imageAlt",   # SELECT
+                                     "blog",                                        # FROM
+                                     null,                                          # WHERE (everything)
+                                     "blog.id",                                     # ORDER BY
+                                     "DESC",                                        # ORDER
+                                     $posts,                                        # LIMIT
+                                     "LEFT",                                        # JOIN
+                                     "media",                                       # JOIN TABLE
+                                     "blog.id=media.mid AND media.blog=1");         # JOIN CONDITION
         $this->posts = $result;
     }
 
     /**
-     * Returns the array with all the blog posts
-     * @return [type] [description]
+     * Check if there's articles to show on next page
+     * @return int page number (1 if not valid)
+     */
+    private function checkPage(){
+        $amount = $this->db->receive('COUNT(*)', 'blog');
+        $page = 1;
+        
+        if(isset($_GET['side']) && $this->val->valInt($_GET['side']) && $_GET['side'] > 0)
+            $page = mysqli_real_escape_string($this->conn, $_GET['side']);
+
+        # Check availability for NEXT page
+        $dbAmount      = $amount['COUNT(*)'];
+        $currentAmount = $page * $this->pageAmount;
+        $nextAmount    = ($page+1) * $this->pageAmount;
+        if (!(($dbAmount-$currentAmount) > -$this->pageAmount)){
+            $page = 1;
+            $currentAmount = $page * $this->pageAmount;
+            $nextAmount    = ($page+1) * $this->pageAmount;
+        }
+
+        # So we can jump to the appropriate place on the view page
+        $this->jumpTo = $currentAmount;
+
+        # Values for the forward button
+        if (($dbAmount-$nextAmount) > -$this->pageAmount)
+            $this->forwardButton = ['forward' => true, 'page' => $page+1];
+        else
+            $this->forwardButton = ['forward' => false];
+
+        # Values for the less button
+        if ($page != 1)
+            $this->lessButton = ['less' => true, 'page' => $page-1];
+        else
+            $this->lessButton = ['less' => false];
+
+        return $page;
+    }
+
+    /**
+     * Returns the view values to the more (articles) button
+     * @return array If available (forward=>true) and next (page)
+     */
+    public function getMore(){
+        return $this->forwardButton;
+    }
+
+    /**
+     * Return the view values for the less (articles) button
+     * @return array If available (less=>true) and previous (page)
+     */
+    public function getLess(){
+        return $this->lessButton;
+    }
+
+    /**
+     * When we fetch more/less articles, this will make sure
+     * that the page will jump to a resonable place of the page
+     * @return int The article to jump to
+     */
+    public function getJump(){
+        return $this->jumpTo;
+    }
+
+    /**
+     * Returns the array with the blog posts
+     * @return array The amount of posts defined by setPosts()
      */
     public function getPosts() {
         return $this->posts;
@@ -59,7 +129,7 @@ class BlogController{
     /**
      * Decodes the ID passed by the URL
      * @param  string $id The encoded string
-     * @return int        The decoded id     
+     * @return int        The decoded id
      */
     public function decodeId (string $id) {
         return $this->b64->decode($id);
@@ -67,7 +137,7 @@ class BlogController{
 
     /**
      * Validates the id and matches it to the post array
-     * @return bool TRUE/FALSE if found in posts) 
+     * @return bool TRUE/FALSE if found in posts)
      */
     public function checkId(){
 
@@ -83,7 +153,7 @@ class BlogController{
         # Return post result if found
         $search = array_search($id, array_column($this->posts, 'id'));
         if ($search || $search === 0) {
-            $result = $this->posts[$search];
+            $result   = $this->posts[$search];
             $imageAlt = "Blog Billede";
             if(!empty($result['imageAlt']))
                 $imageAlt = $result['imageAlt'];
@@ -93,6 +163,14 @@ class BlogController{
 
         return false;
     }
-}
 
-?>
+    private function checkPageAmount(){
+        $values           = [6, 12, 25, 50];
+        $this->pageAmount = $values[0];
+
+        if (!isset($_GET['antal']) || $_GET['antal'] == 6 || !in_array($_GET['antal'], $values))
+            return;
+
+        $this->pageAmount = $_GET['antal'];
+    }
+}

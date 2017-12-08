@@ -17,8 +17,9 @@ echo'<div class="row">';
             echo'</div>';
 
             # Contact Information
-            $result = $singleton->db()->recieve('*', 'footer');
+            $result = $singleton->db()->receive('*', 'footer');
 
+            # TODO: Fix this spaghetti
             # Desktop Contact info
             echo'<div itemscope itemtype="http://schema.org/Person" class="col-4 contactFooter no-mobile right">';
                 echo'<small>';
@@ -74,7 +75,7 @@ echo'<div class="row">';
         // TDOD: Top option
 
         # Bottom © and social
-        $result = $singleton->db()->recieve('*', 'socialmedia');
+        $result = $singleton->db()->receive('*', 'socialmedia');
         echo'<div style="width:100%; padding-bottom:.5%;">';
             echo'<span style="font-size:75%;">© '.$time->timestamp('year').'</span>';
             echo'<div class="right">';

@@ -24,7 +24,7 @@ class crud{
      * 
      * @return array           Return results in an array
      */
-    public function recieve($data, 
+    public function receive($data, 
                             $from, 
                             $where=null, 
                             $orderBy=null, 

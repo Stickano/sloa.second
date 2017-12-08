@@ -1,7 +1,7 @@
 <?php
 
-class ServicesController{
-    
+class PregodmodeController{
+
     private $conn;
     private $db;
     public function __construct(connection $conn, crud $db){

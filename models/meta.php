@@ -34,13 +34,13 @@ class PageMeta {
         
 
         # Set the variables
-        $result = $this->db->recieve($this->data, $this->from, $this->where);
+        $result = $this->db->receive($this->data, $this->from, $this->where);
         $this->title = $result['title'];
         $this->description = $result['description'];
         $this->keywords = $result['keywords'];
         $this->follow = $result['follow'];
     
-        $result = $this->db->recieve($this->data, $this->from, 'author=1');
+        $result = $this->db->receive($this->data, $this->from, 'author=1');
         $this->author = $result['description'];
 
     }

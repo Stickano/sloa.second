@@ -1,39 +1,96 @@
-@charset="utf-8";
+.font-headline {
+  font-family: "Abril Fatface", cursive; }
 
-/*
+.font-special {
+  font-family: "Handlee", cursive; }
 
-	This stylesheet will make some browser reset and general
-	adjustments that I usually do anyways.
-	2017, Henrik (Jeppesen@tutanota.com)
+.font-paragraph {
+  font-family: "Bellefair", serif; }
 
- */
+.content {
+  flex: 1; }
 
-html {
-	height: 100%;
-	width : 100%;
-}
+a.white-link:hover, a.white-link:active, a.white-link:link, a.white-link:visited {
+  color: #f1f1f1; }
+
+.white-txt {
+  color: #f1f1f1; }
 
 body {
-	width     : 100%;
-	overflow-y: scroll;
-	display: flex;
-	min-height: 100vh;
-	flex-direction: column;
-}
+  background-color: #F1F1F1;
+  max-width: 1600px; }
 
-/* Reset all margin and padding */
-* {
-	margin : 0;
-	padding: 0;
-}
+.footer {
+  border-top: 1px solid #2a2025;
+  background-color: #2a2025;
+  padding-bottom: 0;
+  color: #f1f1f1; }
 
-/* Fix Image Sizes */
-img {
-	height: auto !important;
-	width : 100%;
-}
+.footer-td {
+  padding-right: 10px;
+  padding-top: 6px;
+  text-align: right; }
 
-/* Collapse table border */
-table, td {
-	border-collapse: collapse;
-}
+.footer-td-icon {
+  text-align: center;
+  padding-top: 6px; }
+
+.contactFooter {
+  text-align: right;
+  padding-right: 0; }
+
+.contactFooterMobile {
+  text-align: center; }
+
+.footerMobile-td {
+  padding-left: 10px;
+  padding-top: 6px;
+  text-align: left; }
+
+a.menuButton:active, a.menuButton:visited, a.menuButton:link {
+  color: #2a2025;
+  font-size: 120%; }
+
+a.menuButton:hover {
+  color: #f5b;
+  transition: color .15s ease-in-out; }
+
+a.menuButtonSelected:active, a.menuButtonSelected:visited, a.menuButtonSelected:link {
+  color: #f5b; }
+
+a.sloaButton:active, a.sloaButton:visited, a.sloaButton:link {
+  color: #2a2025;
+  font-size: 140%; }
+
+.menuRow {
+  color: #2a2025;
+  border-bottom: 1px solid #2a2025; }
+
+.postsDiv {
+  border-left: 0.2rem solid #5bc0de;
+  list-style-type: none; }
+
+.articleImage {
+  min-width: 100%;
+  margin: 0 2em 2em 0; }
+
+.blogBackForth {
+  background-color: #5bc0de;
+  color: #f1f1f1;
+  font-weight: bold;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  padding: 10px 0; }
+
+.hiddenSubmit {
+  position: absolute;
+  z-index: 0;
+  left: -9999px; }
+
+.socialIcon {
+  color: lightgrey;
+  font-size: 130%;
+  margin: 0 3px; }
+
+/*# sourceMappingURL=styles.css.map */

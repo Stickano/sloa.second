@@ -1,7 +1,7 @@
 <?php
 
-class PreGodmodeController{
-
+class GuiderController{
+    
     private $conn;
     private $db;
     public function __construct(connection $conn, crud $db){

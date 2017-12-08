@@ -37,7 +37,7 @@ class kontaktController{
         $this->emoji = new emoji();
 
         # Get and define contact page information
-        $result = $this->db->recieve("*", "contact");
+        $result = $this->db->receive("*", "contact");
         $this->used = $result['contacted'];
         $this->txt = $result['txt'];
         $this->mailTo = $result['mail_to'];
