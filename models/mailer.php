@@ -1,6 +1,6 @@
 <?php
 
-class mailer {
+class Mailer {
 
 	private $reciever;
 	private $serverMail;

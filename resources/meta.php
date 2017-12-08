@@ -5,8 +5,8 @@
 
     # Singleton
     require_once('resources/singleton.php');
-    $singleton = Singleton::init();
-
+    $singleton  = Singleton::init();
+    
     # Shortcut for some commonly used classes
     $controller = $singleton::$controller;
     $meta       = $singleton::$meta;
@@ -39,6 +39,5 @@
     echo'<link href="css/w3s.css" rel="stylesheet">';
     echo'<link href="css/styles.css" rel="stylesheet">';
     echo'<link href="css/helpers.css" rel="stylesheet">';
-    echo'<link href="css/additionals.css" rel="stylesheet">';
 
 ?>

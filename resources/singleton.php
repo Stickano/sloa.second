@@ -2,7 +2,7 @@
 
 @session_start();
 require_once('models/connection.php');
-require_once('models/database.php');
+require_once('models/crud.php');
 require_once('models/time.php');
 require_once('models/meta.php');
 require_once('models/security.php');
@@ -46,11 +46,11 @@ final class Singleton {
             self::setConn();
             self::setDb();
             self::getPage();
-
-            self::$time = new time();
-            self::$security = new security();
-            self::$meta = new PageMeta(self::conn(), self::db(), self::$page);
-            self::$session = SessionsHandler::init();
+            
+            self::$time     = new Time();
+            self::$security = new Security();
+            self::$meta     = new PageMeta(self::conn(), self::db(), self::$page);
+            self::$session  = SessionsHandler::init();
             
             self::setHttps();
             self::setPage();
@@ -96,15 +96,15 @@ final class Singleton {
     private static function setConn(){
         // self::$conn = new connection(self::host, self::user, self::pass, self::db); 
         $credentials = new Credentials();
-        $val = $credentials->get();
-        self::$conn = new connection($val['host'], $val['user'], $val['pass'], $val['db']); 
+        $val         = $credentials->get();
+        self::$conn  = new Connection($val['host'], $val['user'], $val['pass'], $val['db']); 
     }
 
     /**
      * Creates a CRUD object
      */
     private static function setDb(){
-        self::$crud = new crud(self::conn());
+        self::$crud = new Crud(self::conn());
     }
 
     /**

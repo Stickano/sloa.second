@@ -1,6 +1,6 @@
 <?php
 
-class sanitizer {
+class Sanitizer {
 
 	private $find;
 

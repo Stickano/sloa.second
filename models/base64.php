@@ -1,6 +1,6 @@
 <?php
 
-class base64 {
+class Base64 {
 
 	public function decode($string) {
 		$base = strtr($string,  '-_~', '+/=');

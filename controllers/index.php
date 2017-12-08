@@ -14,7 +14,9 @@ class IndexController{
      * @return string Frontpage-message
      */
     public function getMessage(){
-        $result = $this->db->receive('txt','main','id=1');
+        $select = ['txt' => 'main'];
+        $where  = ['id' => 1];
+        $result = $this->db->read($select, $where);
         return $result['txt'];
     }
     

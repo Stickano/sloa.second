@@ -14,35 +14,59 @@ class BlogController{
     private $posts         = array();
     private $forwardButton = array();
     private $lessButton    = array();
+    private $categories    = array();
     private $jumpTo        = 1;
     private $pageAmount    = 6;
+    private $category;     # Current category
 
-    public function __construct(connection $conn, crud $db){
+    public function __construct(Connection $conn, Crud $db){
         $this->conn = $conn;
         $this->db   = $db;
-        $this->b64  = new base64();
-        $this->val  = new validators();
+        $this->b64  = new Base64();
+        $this->val  = new Validators();
 
+        self::setCategories();
         self::checkPageAmount();
         self::setPosts();
         self::checkId();
     }
 
-
+    /**
+     * Collect all the blog-posts from the database
+     */
     private function setPosts() {
-        $page = self::checkPage();
-        $posts = $this->pageAmount * $page;
-        echo $posts;
-        $result = $this->db->receive("blog.*, media.file, media.txt AS imageAlt",   # SELECT
-                                     "blog",                                        # FROM
-                                     null,                                          # WHERE (everything)
-                                     "blog.id",                                     # ORDER BY
-                                     "DESC",                                        # ORDER
-                                     $posts,                                        # LIMIT
-                                     "LEFT",                                        # JOIN
-                                     "media",                                       # JOIN TABLE
-                                     "blog.id=media.mid AND media.blog=1");         # JOIN CONDITION
+        $page        = self::checkPage();
+        $posts       = $this->pageAmount * $page;
+
+        $select      = ['blog.*, media.file, media.txt AS imageAlt' => 'blog'];
+        $order       = ['blog.id' => 'desc'];
+        $limit       = $posts;
+        $clause      = ['blog.id' => 'media.mid', 'media.blog' => 1];
+        $join        = ['left' => 'media', $clause];
+        $where       = ['cid' => $this->category];
+
+        $result      = $this->db->read($select, $where, $order, $limit, $join);
         $this->posts = $result;
+        
+    }
+
+    /**
+     * Collect the categories from the database
+     */
+    private function setCategories(){
+        $select           = ['id, category' => 'categories'];
+        $where            = ['blog' => 1];
+        $order            = ['category' => 'asc'];
+        $result           = $this->db->read($select, $where, $order);
+        $this->categories = $result;
+    }
+
+    /**
+     * Return the categories for the view
+     * @return array All the categories for the blog page
+     */
+    public function getCategories(){
+        return $this->categories;
     }
 
     /**
@@ -50,18 +74,21 @@ class BlogController{
      * @return int page number (1 if not valid)
      */
     private function checkPage(){
-        $amount = $this->db->receive('COUNT(*)', 'blog');
-        $page = 1;
+        $select = ['COUNT(*)' => 'blog'];
+        $where  = ['cid' => $this->category];
+        $amount = $this->db->read($select, $where);
+        $page   = 1;
         
         if(isset($_GET['side']) && $this->val->valInt($_GET['side']) && $_GET['side'] > 0)
-            $page = mysqli_real_escape_string($this->conn, $_GET['side']);
+            $page = $_GET['side'];
 
         # Check availability for NEXT page
-        $dbAmount      = $amount['COUNT(*)'];
+        $dbAmount      = $amount[0]['COUNT(*)'];
         $currentAmount = $page * $this->pageAmount;
         $nextAmount    = ($page+1) * $this->pageAmount;
+
         if (!(($dbAmount-$currentAmount) > -$this->pageAmount)){
-            $page = 1;
+            $page          = 1;
             $currentAmount = $page * $this->pageAmount;
             $nextAmount    = ($page+1) * $this->pageAmount;
         }
@@ -164,9 +191,22 @@ class BlogController{
         return false;
     }
 
+    /**
+     * Gets, and sets, the chosen articles per page amount
+     * @return bool         Returns false if invalid number, else 
+     *                      it just sets the value.
+     */ 
     private function checkPageAmount(){
         $values           = [6, 12, 25, 50];
         $this->pageAmount = $values[0];
+        $this->category   = $this->categories[0]['id'];
+
+        if (isset($_GET['kategori'])){
+            foreach ($this->categories as $key) {
+                if (strtolower($_GET['kategori']) == strtolower($key['category']))
+                    $this->category = strtolower($key['id']);
+            }
+        }
 
         if (!isset($_GET['antal']) || $_GET['antal'] == 6 || !in_array($_GET['antal'], $values))
             return;

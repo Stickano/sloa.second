@@ -1,6 +1,6 @@
 <?php
 
-class connection extends mysqli {
+class Connection extends mysqli {
 
 	public function __construct($host, $username, $password, $database) {
 		parent::__construct($host, $username, $password, $database);

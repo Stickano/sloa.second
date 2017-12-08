@@ -1,6 +1,6 @@
 <?php
 
-class security {
+class Security {
 
 	private $host;
 	private $self;

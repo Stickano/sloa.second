@@ -1,6 +1,6 @@
 <?php
 
-class dir {
+class Dir {
 
 	/**
 	 * List Files & Folders in a given Directory 

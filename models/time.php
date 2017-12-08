@@ -1,6 +1,6 @@
 <?php
 
-class time {
+class Time {
 
 	private $zone;
 	private $stamp;

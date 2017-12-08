@@ -1,6 +1,6 @@
 <?php
 	
-class random {
+class Random {
 
 	private $string;
 	private $length;

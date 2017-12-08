@@ -1,6 +1,6 @@
 <?php
 	
-class validators {
+class Validators {
 
 	/**
 	 * Validate Emails

@@ -1,6 +1,6 @@
 <?php
 
-class emoji {
+class Emoji {
 
 	/**
 	 * Unicode Emojis
