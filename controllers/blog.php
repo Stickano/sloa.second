@@ -38,7 +38,7 @@ class BlogController{
         $page        = self::checkPage();
         $posts       = $this->pageAmount * $page;
 
-        $select      = ['blog.*, media.file, media.txt AS imageAlt' => 'blog'];
+        $select      = ['blog.*, media.file, media.thumb, media.txt AS imageAlt' => 'blog'];
         $order       = ['blog.id' => 'desc'];
         $limit       = $posts;
         $clause      = ['blog.id' => 'media.mid', 'media.blog' => 1];

@@ -1,7 +1,4 @@
 <?php
-    # This document handles meta/head data
-    # This document should be loaded once per page
-
 
     # Singleton
     require_once('resources/singleton.php');
@@ -15,14 +12,14 @@
 
     # Meta
     echo'<title>'.$meta->getTitle().'</title>';
-    echo'<link rel="alternate" href="https://sloa.dk" hreflang="da" />';
     echo'<meta charset="utf-8">';
     echo'<meta http-equiv="X-UA-Compatible" content="IE=edge">';
-    echo'<meta name="author" content="'.$meta->getAuthor().'" />';
-    echo'<meta name="description" content="'.$meta->getDescription().'">';
-    echo'<meta name="keywords" content="'.$meta->getKeywords().'" />';
-    echo'<meta name="robots" content="'.$meta->getFollow().'"/>';
-    echo'<meta name="viewport" content="width=device-width, initial-scale=0.8">';
+    echo'<link rel="alternate" href="https://sloa.dk" hreflang="da" />';
+    echo'<meta name="author"        content="'.$meta->getAuthor().'" />';
+    echo'<meta name="description"   content="'.$meta->getDescription().'">';
+    echo'<meta name="keywords"      content="'.$meta->getKeywords().'" />';
+    echo'<meta name="robots"        content="'.$meta->getFollow().'"/>';
+    echo'<meta name="viewport"      content="width=device-width, initial-scale=0.8">';
 
     # Additional Fonts (Google)
     echo'<link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Bellefair|Handlee" rel="stylesheet">';
@@ -35,8 +32,13 @@
     # JQuery
     echo'<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>';
 
-    # Stylesheets
+    # JQuery Lightbox
+    echo'<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />';
+
+    # CSS from w3s template
     echo'<link href="css/w3s.css" rel="stylesheet">';
+    
+    # Custom stylesheets
     echo'<link href="css/styles.css" rel="stylesheet">';
     echo'<link href="css/helpers.css" rel="stylesheet">';
 

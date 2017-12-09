@@ -3,7 +3,7 @@
 require_once('models/mailer.php');
 require_once('models/emoji.php');
 
-class kontaktController{
+class KontaktController{
 
     private $conn;
     private $db;
@@ -28,23 +28,24 @@ class kontaktController{
     private $success;
     private $formValues = array();
 
-    public function __construct(connection $conn, crud $db, SessionsHandler $session){
+    public function __construct(Connection $conn, Crud $db, SessionsHandler $session){
         
-        $this->conn = $conn;
-        $this->db = $db;
+        $this->conn    = $conn;
+        $this->db      = $db;
         $this->session = $session;
-
-        $this->emoji = new emoji();
+        
+        $this->emoji   = new Emoji();
 
         # Get and define contact page information
-        $result = $this->db->receive("*", "contact");
-        $this->used = $result['contacted'];
-        $this->txt = $result['txt'];
-        $this->mailTo = $result['mail_to'];
-        $this->pgp = $result['pgp'];
+        $select       = ['*' => 'contact'];
+        $result       = $this->db->read($select);
+        $this->used   = $result[0]['contacted'];
+        $this->txt    = $result[0]['txt'];
+        $this->mailTo = $result[0]['mail_to'];
+        $this->pgp    = $result[0]['pgp'];
 
         # Mailer method and config
-        $this->mailer = new mailer($this->mailTo, $this->session);
+        $this->mailer = new Mailer($this->mailTo, $this->session);
         $this->mailer->setServerMail('noreply@sloa.dk');
         $this->mailer->setMissingFields('Der mangler noget!');
         $this->mailer->setIllegibleMail('Ugyldig Email!');

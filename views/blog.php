@@ -13,11 +13,13 @@ if($key = $controller->checkId()){
         # The article (Image first)
         if ($key['file']){
             echo'<div class="col-3">';
-                if(!empty($key['file'])){
-                    echo'<img src="'.$key['file'].'" 
-                                class="articleImage" 
-                                alt="'.$key['imageAlt'].'"/>';
-                }
+            
+                # TODO: Fix in Controller
+                $thumb = $key['file'];
+                if (!empty($key['thumb']))
+                    $thumb = $key['thumb'];
+
+                echo'<a data-fancybox="gallery" href="'.$key['file'].'" style="outline:none;"><img src="'.$thumb.'" class="articleImage"></a>';
             echo'</div>';
         }
 
@@ -46,7 +48,7 @@ if (!$controller->checkId()) {
                 # Chose the amount of articles per page
                 echo'Vis'.$singleton->spaces(3);
                 echo'<select name="antal" id="articleAmount">';
-                    $values = [6, 12, 25, 50];
+                    $values = [6, 12, 25, 50]; # TODO: const in controller
                     foreach ($values as $key) {
                         $selected = null;
                         if(isset($_GET['antal']) && in_array($_GET['antal'], $values) && $key == $_GET['antal'])
@@ -78,11 +80,21 @@ if (!$controller->checkId()) {
         $br++;
         $encodedId = $controller->encodeId($key['id']);
 
+        # For notes, display the whole content instead of just the teaser
+        # TODO: Fix in controller
+        $resultParagraph = $key['teaser'];
+        $resultHeadline  = '<a href="'.$singleton->getUrl().'&id='.$encodedId.'" title="Åben Artikel"> <h4 class="font-headline">'.$key['headline'].'</h4> </a>';
+        if(isset($_GET['kategori']) && strtolower($_GET['kategori']) == 'notater'){
+            $resultParagraph = $key['txt'];
+            $resultHeadline  = '<h4 class="font-headline">'.$key['headline'].'</h4>';
+        }
+
         # Places (and echoes) the articles in their created month/year section
+        # TODO: Fix in controller
         $month   = $time->getMonth(substr($key['time'], 3, 2));
         $newDate = $month." ".substr($key['time'], 6, 4);
         if($date != $newDate){
-            $date      = $newDate;
+            $date = $newDate;
             echo '</ul>';
             echo '<div class="col-12" style="padding-left:50px;"><small>'.$date.'</small></div>';
             echo'<ul>';
@@ -90,10 +102,23 @@ if (!$controller->checkId()) {
 
         # The article headline and its teaser
         echo '<li class="col-12 postsDiv" id="'.$br.'" style="margin-left:0;">';
-            echo'<a href="'.$singleton->getUrl().'&id='.$encodedId.'" title="Åben Artikel">';
-                echo'<h4 class="font-headline">'.$key['headline'].'</h4>';
-            echo'</a>';
-            echo'<p class="font-paragraph">'.$key['teaser'].'</p>';
+            $colSize = 12;
+            echo $resultHeadline;
+            echo'<div class="row">';
+                if (isset($_GET['kategori']) && strtolower($_GET['kategori']) == 'notater' && !empty($key['file'])){
+                    $colSize = 9;
+                    $thumb = $key['file'];
+                    if (!empty($key['thumb']))
+                        $thumb = $key['thumb'];
+
+                    echo'<div class="col-3">';
+                        echo'<a data-fancybox href="'.$key['file'].'" style="outline:none;"><img src="'.$thumb.'" class="articleImage"></a>';
+                    echo'</div>';
+                }
+                echo'<div class="col-'.$colSize.'">';
+                    echo'<p>'.$resultParagraph.'</p>';
+                echo'</div>';
+            echo'</div>';
         echo'</li>';
     }
     echo'</ul>';
@@ -102,6 +127,7 @@ if (!$controller->checkId()) {
     # Pagination (ish)
     echo'<div class="row">';
         # Less Articles
+        # TODO: Fix in controller
         $count = null;
         $cat   = null;
         if(isset($_GET['kategori']))
@@ -111,7 +137,7 @@ if (!$controller->checkId()) {
 
         echo'<div class="col-6" style="text-align:center; margin:5px 0 0; padding:0; border-right:1px solid #f1f1f1;">';
             if($controller->getLess()['less'] == true){
-                $jumpto = $controller->getJump()-12;
+                $jumpto = $controller->getJump()-12; # TODO: Fix and smarten in controller
                 echo'<a href="?blog'.$cat.$count.'&side='.$controller->getLess()['page'].'#'.$jumpto.'" class="blogBackForth">Hent Færre</a>';
             }
         echo'</div>';

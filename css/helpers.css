@@ -13,8 +13,9 @@ html {
   html {
     font-size: 120%; } }
 a {
-  color: #00bfff;
-  text-decoration: none; }
+  color: #3971ED;
+  text-decoration: none; 
+  text-decoration: underline; }
 
 h1, h2, h3, h4, h5 {
   margin-top: .5em; }

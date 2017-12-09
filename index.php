@@ -15,7 +15,7 @@ echo'
 # Left side navigation (menu) 
 echo'
 <nav class="w3-sidebar w3-bar-block w3-text-grey w3-collapse w3-top" style="z-index:3;width:300px;font-weight:bold; left:0; background-color: #262626; padding-left:2%;" id="sidebar"><br>
-  <h3><b><a href="index.php" style="color:lightgrey;">sloa.dk</a></b></h3>
+  <h3><b><a href="index.php" class="">sloa.dk</a></h3>
   <a href ="javascript:void(0)"   onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-hide-large">Luk</a>
   <a href ="?blog"                onclick="w3_close()" class="w3-bar-item w3-button">Blog</a> 
   <a href ="?guider"              onclick="w3_close()" class="w3-bar-item w3-button">Guider</a> 
@@ -80,8 +80,10 @@ echo'
   </div>
 </div>';
 
-# Include JavaScript/JQuery functions
+# Include JavaScript/JQuery/Vue/Plugins
+echo'<script src="js/vue.js"></script>';
 echo'<script src="js/dynamics.js"></script>';
+echo'<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>';
 
 echo'
 </body>

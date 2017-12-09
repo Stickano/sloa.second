@@ -7,8 +7,9 @@
 }
 
 .articleImage {
-    width: 100%;
-    margin   : 0 2em 2em 0;
+    width  : 100%;
+    margin : 0 2em 2em 0;
+    outline: none;
 }
 
 .blogBackForth {
@@ -22,7 +23,11 @@
 }
 
 .hiddenSubmit {
-    position:absolute;
-    z-index: 0;
-    left:-9999px;
+    position: absolute;
+    z-index : 0;
+    left    : -9999px;
+}
+
+.noteImage {
+    max-width: 100%;
 }
