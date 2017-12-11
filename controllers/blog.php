@@ -214,3 +214,4 @@ class BlogController{
         $this->pageAmount = $_GET['antal'];
     }
 }
+?>

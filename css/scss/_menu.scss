@@ -1,21 +1,89 @@
 
 @import 'constants';
 
-a.menuButton:active,a.menuButton:visited,a.menuButton:link{
-  color: $black-light;
-  font-size: 120%;
-}
-
-a.menuButton:hover{
-    color: $pink;
-    transition: color .15s ease-in-out;
-}
-
-a.menuButtonSelected:active,a.menuButtonSelected:visited,a.menuButtonSelected:link  {
-    color: $pink;
-}
-
 a.sloaButton:active,a.sloaButton:visited,a.sloaButton:link{
-    color: $black-light;
-    font-size: 140%;
+    color: $matt-red;
+    font-family: $special;
+    font-size: 120%;
+    text-decoration: none;
+    margin-left: 25px;
+}
+
+.sidebarContainer {
+    position: fixed !important;
+    width: 300px;
+    background-color: #262626;
+    overflow: hidden;
+    display: none ;
+    z-index: 3;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    font-weight: bold;
+    padding:10px 0 0 10px;
+    font-family: "Raleway", sans-serif;
+}
+
+.alphaTxt {
+    font-size:70%; 
+    color: rgba(204, 204, 204, .2);
+}
+
+@media (min-width: 1024px){
+    .sidebarContainer {
+        display: block !important;
+    }
+}
+
+.sidebarButton {
+    padding: 8px 20px;
+    margin-left:25px;
+    width: auto;
+    border: none;
+    outline: none;
+    display: block;
+    width: 100%;
+    color: lightgrey;
+    text-decoration: none;
+}
+
+.sidebarButton:hover {
+    color: #000;
+    background-color: #F1F1F1;
+}
+
+.sideContact {
+    color:lightgrey; 
+    font-size: 80%;
+    font-style: normal; 
+    line-height: 1.3rem;
+}
+
+.loginContainer {
+    position: fixed; 
+    bottom: 0; 
+    margin-bottom: 10px;
+}
+
+.topBar {
+    padding: 1em 16px 1em 0;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    top: 0;
+    background-color: #262626;
+}
+
+.topBar:after, .topBar:before {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.topbarButton {
+    color: black; 
+    padding:3px 10px;
+    background-color: #f1f1f1;
+    outline: none;
+    text-decoration: none;
 }

@@ -10,20 +10,18 @@ $(document).ready(function(){
 });
 
 // Script to open and close sidebar
-function w3_open() {
+function openSidebar() {
     document.getElementById("sidebar").style.display = "block";
     document.getElementById("overlay").style.display = "block";
 }
  
-function w3_close() {
+function closeSidebar() {
     document.getElementById("sidebar").style.display = "none";
     document.getElementById("overlay").style.display = "none";
 }
 
-// Modal Image Gallery
-function onClick(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "block";
-  var captionText = document.getElementById("caption");
-  captionText.innerHTML = element.alt;
-}
+// ELEMENT.locale(ELEMENT.lang.en)
+// new Vue({
+//   el: '#view',
+  
+// })

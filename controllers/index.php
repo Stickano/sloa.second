@@ -17,7 +17,7 @@ class IndexController{
         $select = ['txt' => 'main'];
         $where  = ['id' => 1];
         $result = $this->db->read($select, $where);
-        return $result['txt'];
+        return $result[0]['txt'];
     }
     
 }

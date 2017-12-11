@@ -26,7 +26,7 @@ if($key = $controller->checkId()){
         # The headline and paragraph
         echo'<div class="col-9" style="margin-top:-25px;">';
             echo '<h1 class="font-headline">'.$key['headline'].'</h1>';
-            echo '<p>'.$key['txt'].'</p>';
+            echo '<p class="font-paragraph">'.$key['txt'].'</p>';
         echo'</div>';
     echo'</div>';
 } 
@@ -103,20 +103,10 @@ if (!$controller->checkId()) {
         # The article headline and its teaser
         echo '<li class="col-12 postsDiv" id="'.$br.'" style="margin-left:0;">';
             $colSize = 12;
-            echo $resultHeadline;
+            echo '<span class="font-headline blue">'.$resultHeadline.'</span>';
             echo'<div class="row">';
-                if (isset($_GET['kategori']) && strtolower($_GET['kategori']) == 'notater' && !empty($key['file'])){
-                    $colSize = 9;
-                    $thumb = $key['file'];
-                    if (!empty($key['thumb']))
-                        $thumb = $key['thumb'];
-
-                    echo'<div class="col-3">';
-                        echo'<a data-fancybox href="'.$key['file'].'" style="outline:none;"><img src="'.$thumb.'" class="articleImage"></a>';
-                    echo'</div>';
-                }
                 echo'<div class="col-'.$colSize.'">';
-                    echo'<p>'.$resultParagraph.'</p>';
+                    echo'<p class="font-paragraph">'.$resultParagraph.'</p>';
                 echo'</div>';
             echo'</div>';
         echo'</li>';

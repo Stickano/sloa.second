@@ -52,9 +52,9 @@ final class Singleton {
             self::$meta     = new PageMeta(self::conn(), self::db(), self::$page);
             self::$session  = SessionsHandler::init();
             
-            self::setHttps();
-            self::setPage();
             self::pageController();
+            self::setPage();
+            self::setHttps();
         }
 
         return self::$instance;
@@ -75,19 +75,20 @@ final class Singleton {
     }
 
     /**
-     * This will use the HTTPS (Re)connect method in the security class
-     */
-    private static function setHttps(){
-        self::$security->SecureConnect();
-    }
-
-    /**
      * This will load the appropriate controller
      */
     public static function pageController(){
         require_once('controllers/'.self::$page.'.php');
         $controller = ucfirst(self::$page).'Controller';
         self::$controller = new $controller(self::conn(), self::db(), self::$session); 
+    }
+
+    /**
+     * This will use the HTTPS (Re)connect method in the security class
+     */
+    private static function setHttps(){
+        self::$security->SecureConnect();
+
     }
 
     /**
@@ -157,5 +158,4 @@ final class Singleton {
         self::$session->set("nowPage", self::$instance->getUrl());
     }
 }
-
 ?>

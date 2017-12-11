@@ -38,16 +38,21 @@ class Crud{
         # Build the WHERE clause
         if($where != null && !empty($where)){
 
-            # Check that the array length equals 1
-            if(count($where) != 1)
-                throw new Exception("Error in WHERE handling - pass an array with one key and its value!");
+            $whereString = 'WHERE ';
 
-            # Secure the inputs
-            $whereSel = mysqli_real_escape_string($this->conn, key($where));
-            $whereVal = mysqli_real_escape_string($this->conn, $where[key($where)]);
+            $br = 0;
+            foreach ($where as $key => $value) {
+                # Secure the inputs
+                $whereSel = mysqli_real_escape_string($this->conn, $key);
+                $whereVal = mysqli_real_escape_string($this->conn, $value);
 
-            # Add to query string
-            $where = 'WHERE '.$whereSel.'='.$whereVal;
+                if ($br != 0)
+                    $whereString .= ' AND ';
+                $br++;
+                $whereString .= $whereSel."='".$whereVal."'";
+            }
+
+            $where = $whereString;
         }
 
         # Build the JOIN clause
@@ -111,7 +116,7 @@ class Crud{
         if($limit != null){
 
             # Check that it's a integer value
-            if(!is_int($limit))
+            if(!is_numeric($limit))
                 throw new Exception("Error in LIMIT handling - pass an integer value");
             
             # Check that it's a positive value
