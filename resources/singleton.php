@@ -14,7 +14,7 @@ final class Singleton {
     private static $instance;
 
     # database connection
-    private static $conn;  
+    private static $conn;
     private static $crud;
     private static $security;
 
@@ -26,6 +26,7 @@ final class Singleton {
     # View and Controller
     public static $page;
     public static $controller;
+    public static $js;
 
     # Private constructor to ensure it won't be initialized
     private function __construct(){}
@@ -35,23 +36,23 @@ final class Singleton {
      * It will initialize a Connection and CRUD class
      * It will determine which View to load and its apropriate Controller
      * It will store the page you hit (nowPage), along with storing the previous page (prePage)
-     * And it will initialize a couple of typical classes, like meta and time (used in footer) 
-     * @return object This (only) instance 
+     * And it will initialize a couple of typical classes, like meta and time (used in footer)
+     * @return object This (only) instance
      */
     public static function init(){
         if(!isset(self::$instance)){
 
             self::$instance = new self();
-            
+
             self::setConn();
             self::setDb();
             self::getPage();
-            
+
             self::$time     = new Time();
             self::$security = new Security();
             self::$meta     = new PageMeta(self::conn(), self::db(), self::$page);
             self::$session  = SessionsHandler::init();
-            
+
             self::pageController();
             self::setPage();
             self::setHttps();
@@ -80,7 +81,7 @@ final class Singleton {
     public static function pageController(){
         require_once('controllers/'.self::$page.'.php');
         $controller = ucfirst(self::$page).'Controller';
-        self::$controller = new $controller(self::conn(), self::db(), self::$session); 
+        self::$controller = new $controller(self::conn(), self::db(), self::$session);
     }
 
     /**
@@ -95,10 +96,9 @@ final class Singleton {
      * Creates a connection object
      */
     private static function setConn(){
-        // self::$conn = new connection(self::host, self::user, self::pass, self::db); 
         $credentials = new Credentials();
         $val         = $credentials->get();
-        self::$conn  = new Connection($val['host'], $val['user'], $val['pass'], $val['db']); 
+        self::$conn  = new Connection($val['host'], $val['user'], $val['pass'], $val['db']);
     }
 
     /**
@@ -125,8 +125,8 @@ final class Singleton {
     }
 
     /**
-     * Will generate '&nbsp;'  
-     * @param  int    $count The amount of spaces 
+     * Will generate '&nbsp;'
+     * @param  int    $count The amount of spaces
      * @return string        The spaces
      */
     public function spaces($count){
@@ -158,4 +158,5 @@ final class Singleton {
         self::$session->set("nowPage", self::$instance->getUrl());
     }
 }
+
 ?>

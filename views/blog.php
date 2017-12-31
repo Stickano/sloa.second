@@ -13,7 +13,7 @@ if($key = $controller->checkId()){
         # The article (Image first)
         if ($key['file']){
             echo'<div class="col-3">';
-            
+
                 # TODO: Fix in Controller
                 $thumb = $key['file'];
                 if (!empty($key['thumb']))
@@ -29,7 +29,7 @@ if($key = $controller->checkId()){
             echo '<p class="font-paragraph">'.$key['txt'].'</p>';
         echo'</div>';
     echo'</div>';
-} 
+}
 
 
 # All articles
@@ -56,7 +56,7 @@ if (!$controller->checkId()) {
                         echo'<option value="'.$key.'" '.$selected.'>'.$key.'</option>';
                     }
                 echo'</select>';
-                
+
                 # Chose between articles and notes
                 echo $singleton->spaces(3);
                 echo'<select name="kategori" id="category">';
@@ -76,7 +76,7 @@ if (!$controller->checkId()) {
 
     # Loop through articles in a unordered list
     echo'<ul>';
-    foreach ($result as $key) { 
+    foreach ($result as $key) {
         $br++;
         $encodedId = $controller->encodeId($key['id']);
 

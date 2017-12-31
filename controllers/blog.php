@@ -47,7 +47,7 @@ class BlogController{
 
         $result      = $this->db->read($select, $where, $order, $limit, $join);
         $this->posts = $result;
-        
+
     }
 
     /**
@@ -78,7 +78,7 @@ class BlogController{
         $where  = ['cid' => $this->category];
         $amount = $this->db->read($select, $where);
         $page   = 1;
-        
+
         if(isset($_GET['side']) && $this->val->valInt($_GET['side']) && $_GET['side'] > 0)
             $page = $_GET['side'];
 
@@ -193,9 +193,9 @@ class BlogController{
 
     /**
      * Gets, and sets, the chosen articles per page amount
-     * @return bool         Returns false if invalid number, else 
+     * @return bool         Returns false if invalid number, else
      *                      it just sets the value.
-     */ 
+     */
     private function checkPageAmount(){
         $values           = [6, 12, 25, 50];
         $this->pageAmount = $values[0];

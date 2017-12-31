@@ -5,7 +5,7 @@ echo '<head>';
 
 	# Include the meta/headers
 	require_once('resources/meta.php');
-    
+
 echo '</head>';
 echo '<body>';
 
@@ -18,7 +18,7 @@ echo '<nav class="sidebarContainer" id="sidebar">';
     echo '</h3>';
     echo'<a href ="javascript:void(0)" onclick="closeSidebar()" class="sidebarButton mobile-only">Luk</a>';
 
-    # Buttons 
+    # Buttons
     $options = ['blog', 'guider', 'portfolio', 'info', 'kontakt'];
     foreach ($options as $key) {
         $color = null;
@@ -30,6 +30,10 @@ echo '<nav class="sidebarContainer" id="sidebar">';
 
         echo'<a href ="?'.$key.'" onclick="sidebarClose()" class="sidebarButton" '.$color.'>'.ucfirst($val).'</a>';
     }
+
+    # Admin panel, if logged in
+    if ($session->isset('sloaLogged'))
+        echo'<a href ="?godmode" onclick="sidebarClose()" class="sidebarButton" '.$color.'>Administrativ</a>';
 
 
     # External sources (socialmedia, github etc)
@@ -51,8 +55,8 @@ echo '<nav class="sidebarContainer" id="sidebar">';
             echo '<abbr title="Telefon"><i class="fa fa-phone-square" aria-hidden="true"></i></abbr>';
             echo '<span itemprop="telephone"> (+45) 4248 3088</span> ';
             echo '<br>';
-            echo '<abbr title="E-mail"><i class="fa fa-envelope-open" aria-hidden="true" style="font-size:90%;"></i></abbr>';
-            echo '<a href="mailto:info@sloa.dk" title="Åbner din E-mail klient" style="color:lightgrey;"><span itemprop="email"> info@sloa.dk</span></a> &nbsp;';
+            echo '<abbr title="E-mail"><i class="fa fa-envelope-open" aria-hidden="true" style="font-size:90%;"></i></abbr> ';
+            echo '<a href="mailto:info@sloa.dk" title="Åbner din E-mail klient" style="color:lightgrey;"><span itemprop="email">info@sloa.dk</span></a> &nbsp;';
             echo '<br>';
             echo '<abbr title="Bitcoin"><i class="fa fa-btc" aria-hidden="true"></i></abbr>';
             echo '<small> 12D4tnvSJA68MxVQ8jovLJ8trksNumUPh4</small>';
@@ -61,13 +65,15 @@ echo '<nav class="sidebarContainer" id="sidebar">';
 
 
     # Login Icon
-    echo'<div class="loginContainer">';
-        echo '<a href="?pregodmode" title="Administrativ Login" style="color:lightgrey;"><i class="fa fa-unlock-alt" aria-hidden="true"></i></a>';
-    echo '</div>';
+    if (!$session->isset('sloaLogged')){
+        echo '<div class="loginContainer">';
+            echo '<a href="?pregodmode" title="Administrativ Login" style="color:lightgrey;"><i class="fa fa-unlock-alt" aria-hidden="true"></i></a>';
+        echo '</div>';
+    }
 echo '</nav>';
 
 
-echo'<div onclick="closeSidebar()" title="Luk side menuen" id="overlay" class="overlay animateOpacity"></div>';
+echo '<div onclick="closeSidebar()" title="Luk side menuen" id="overlay" class="overlay animateOpacity"></div>';
 
 
 echo '<div class="mainContainer" id="main">';
@@ -80,16 +86,21 @@ echo '<div class="mainContainer" id="main">';
 echo '</div>';
 
 
-# Small screen logo
+# Small screen logo/menu
 echo '<header class="topBar mobile-only">';
     echo '<a href="index.php" class="sloaButton"><b>sloa.dk</b></a>';
     echo '<a href="javascript:void(0)" class="right topbarButton" onclick="openSidebar()">☰</a>';
 echo '</header>';
 
+# Acquire JS libraries
 echo'<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>';
 echo'<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>';
 echo'<script src="js/vue.js"></script>';
 echo'<script src="js/dynamics.js"></script>';
+
+# Load page specific JS document
+if (is_file('js/'.$singleton::$page.'.js'))
+    echo'<script src="js/'.$singleton::$page.'.js"></script>';
 
 echo'</body>';
 echo'</html>';

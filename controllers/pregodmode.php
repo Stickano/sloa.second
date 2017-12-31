@@ -14,7 +14,7 @@ class PregodmodeController{
         $this->conn    = $conn;
         $this->db      = $db;
         $this->session = $session;
-        
+
         # Initialize our Login model
         $this->login = new Login($this->conn);
         $this->login->defineDb('users', 'mail', 'upass');
@@ -28,7 +28,7 @@ class PregodmodeController{
     public function login(){
         $uname = $_POST['uname'];
         $upass = $_POST['upass'];
-        
+
         try {
             $this->login->login($uname, $upass);
             header("location:?godmode");

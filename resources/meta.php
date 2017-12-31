@@ -3,7 +3,7 @@
     # Singleton
     require_once('resources/singleton.php');
     $singleton  = Singleton::init();
-       
+
     # Shortcut for some commonly used classes
     $controller = $singleton::$controller;
     $meta       = $singleton::$meta;

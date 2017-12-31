@@ -1,0 +1,31 @@
+<html><head></head><body>
+
+<div id="el">
+<button @click="pullTrigger"> Hope for the Best </button>
+<p> {{ result  }} </p>
+</div>
+
+<script src="js/vue.js"></script>
+<script>
+    new Vue({
+        el: '#el',
+        data: {
+            result: ''
+        },
+        methods: {
+            pullTrigger: function(){
+                var bulletPosition = this.randomSixShooterPosition;
+                var triggerChamber = this.randomSixShooterPosition;
+                if ( bulletPosition == triggerChamber )
+                    result = 'BOM! Nigga you dead!';
+                else
+                    result = 'click..';
+            },
+            randomSixShooterPosition: function(){
+                return Math.floor((Math.random() * 6) + 1);
+            }
+        }
+    })
+</script>
+
+</body></html>

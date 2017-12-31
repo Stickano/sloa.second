@@ -1,13 +1,13 @@
 <?php
 
 class PageMeta {
-    
+
     private $title       = "sloa.dk";
     private $description = "Privat Portfolio";
     private $keywords    = "Web, Datamatiker, Udvikling, Portfolio";
     private $follow      = "index, follow";
     private $author      = "Henrik Jeppesen";
-    
+
     private $select      = ['*' => 'meta'];
     private $where       = ['main' => 1];
 
@@ -18,7 +18,7 @@ class PageMeta {
 
         $this->conn = $conn;
         $this->db   = $db;
-        
+
         # Select the page to fetch meta for
         $files = scandir('controllers');
         $check = strtolower($page.".php");
@@ -30,7 +30,7 @@ class PageMeta {
             $this->where = ['main' => 1];
         if(key($this->where) == 'kontakt')
             $this->where = ['contact' => 1];
-        
+
         # Set the variables
         try{
             $result            = $this->db->read($this->select, $this->where);
@@ -38,7 +38,7 @@ class PageMeta {
             $this->description = $result[0]['description'];
             $this->keywords    = $result[0]['keywords'];
             $this->follow      = $result[0]['follow'];
-            
+
             $where             = ['author' => 1];
             $result            = $this->db->read($this->select, $where);
             $this->author      = $result[0]['description'];
@@ -60,7 +60,7 @@ class PageMeta {
     }
     public function getAuthor(){
         return $this->author;
-    }   
+    }
 }
 
 ?>
