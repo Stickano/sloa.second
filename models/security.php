@@ -23,8 +23,8 @@ class Security {
      * Makes sure a HTTPS connection is made
      */
     public function SecureConnect() {
-    	if(!isset($_SERVER['HTTPS']) && $_SERVER['SERVER_NAME'] != 'localhost'){ 
-            echo'<script> 
+    	if(!isset($_SERVER['HTTPS']) && $_SERVER['SERVER_NAME'] != 'localhost'){
+            echo'<script>
             	window.location = "https://'.$this->host.$this->self.$this->qs.'";
             	 </script>';
             exit;

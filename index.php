@@ -16,7 +16,9 @@ echo '<nav class="sidebarContainer" id="sidebar">';
         echo $singleton->spaces(4);
         echo '<span class="alphaTxt">| Alpha</span>';
     echo '</h3>';
-    echo'<a href ="javascript:void(0)" onclick="closeSidebar()" class="sidebarButton mobile-only">Luk</a>';
+    echo'<a href ="javascript:void(0)"
+            onclick="closeSidebar()"
+            class="sidebarButton mobile-only">Luk</a>';
 
     # Buttons
     $options = ['blog', 'guider', 'portfolio', 'info', 'kontakt'];
@@ -28,7 +30,9 @@ echo '<nav class="sidebarContainer" id="sidebar">';
         if ($key == 'info')
           $val = 'information';
 
-        echo'<a href ="?'.$key.'" onclick="sidebarClose()" class="sidebarButton" '.$color.'>'.ucfirst($val).'</a>';
+        echo'<a href ="?'.$key.'"
+                onclick="sidebarClose()"
+                class="sidebarButton" '.$color.'>'.ucfirst($val).'</a>';
     }
 
     # Admin panel, if logged in
@@ -37,29 +41,39 @@ echo '<nav class="sidebarContainer" id="sidebar">';
 
 
     # External sources (socialmedia, github etc)
-    # TODO: From db
     echo '<div style="margin-top:60px;">';
-        echo '<a href="https://facebook.com/" title="Facebook" class="socialIcon"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>';
-        echo '<a href="https://linkedin.com/" title="Linkedin" class="socialIcon"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>';
-        echo '<a href="https://github.com/"   title="Github"   class="socialIcon"><i class="fa fa-github-square" aria-hidden="true"></i></a>';
+        foreach ($meta->getSocialMedia() as $key) {
+            if ($key['active'] != 1)
+                continue;
+
+            echo '<a href="'.$key['link'].'"
+                     title="'.$key['link_title'].'"
+                     class="socialIcon">';
+                echo'<i class="'.$key['icon'].'" aria-hidden="true"></i>';
+            echo'</a>';
+        }
     echo '</div>';
 
 
     # Contact information
     echo '<div style="margin-top:60px;">';
         echo '<address itemscope itemtype="http://schema.org/Person" class="sideContact">';
-            echo '<span itemprop="name"><b>Henrik Jeppesen</b></span>';
+            echo '<span itemprop="name"><b>'.$meta->getName().'</b></span>';
             echo '<br>';
-            echo '<span itemprop="addres">Roskilde DK</span>';
+            echo '<span itemprop="addres">'.$meta->getAddress().'</span>';
             echo '<br>';
-            echo '<abbr title="Telefon"><i class="fa fa-phone-square" aria-hidden="true"></i></abbr>';
-            echo '<span itemprop="telephone"> (+45) 4248 3088</span> ';
+            echo '<abbr title="Telefon"><i class="fa fa-phone-square" aria-hidden="true"></i></abbr> ';
+            echo '<span itemprop="telephone">'.$meta->getPhone().'</span>';
             echo '<br>';
             echo '<abbr title="E-mail"><i class="fa fa-envelope-open" aria-hidden="true" style="font-size:90%;"></i></abbr> ';
-            echo '<a href="mailto:info@sloa.dk" title="Åbner din E-mail klient" style="color:lightgrey;"><span itemprop="email">info@sloa.dk</span></a> &nbsp;';
+            echo '<a href="mailto:'.$meta->getMail().'"
+                     title="Åbner din E-mail klient"
+                     style="color:lightgrey;">
+                        <span itemprop="email">'.$meta->getMail().'</span>
+                    </a>';
             echo '<br>';
-            echo '<abbr title="Bitcoin"><i class="fa fa-btc" aria-hidden="true"></i></abbr>';
-            echo '<small> 12D4tnvSJA68MxVQ8jovLJ8trksNumUPh4</small>';
+            echo '<abbr title="Bitcoin"><i class="fa fa-btc" aria-hidden="true"></i></abbr> ';
+            echo '<small>'.$meta->getBcAddress().'</small>';
         echo '</address>';
     echo '</div>';
 
@@ -67,7 +81,9 @@ echo '<nav class="sidebarContainer" id="sidebar">';
     # Login Icon
     if (!$session->isset('sloaLogged')){
         echo '<div class="loginContainer">';
-            echo '<a href="?pregodmode" title="Administrativ Login" style="color:lightgrey;"><i class="fa fa-unlock-alt" aria-hidden="true"></i></a>';
+            echo '<a href="?pregodmode" title="Administrativ Login" style="color:lightgrey;">';
+                echo '<i class="fa fa-unlock-alt" aria-hidden="true"></i>';
+            echo '</a>';
         echo '</div>';
     }
 echo '</nav>';
@@ -93,15 +109,15 @@ echo '<header class="topBar mobile-only">';
 echo '</header>';
 
 # Acquire JS libraries
-echo'<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>';
-echo'<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>';
-echo'<script src="js/vue.js"></script>';
-echo'<script src="js/dynamics.js"></script>';
+echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>';
+echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>';
+echo '<script src="js/vue.js"></script>';
+echo '<script src="js/typical.js"></script>';
 
 # Load page specific JS document
 if (is_file('js/'.$singleton::$page.'.js'))
-    echo'<script src="js/'.$singleton::$page.'.js"></script>';
+    echo '<script src="js/'.$singleton::$page.'.js"></script>';
 
-echo'</body>';
-echo'</html>';
+echo '</body>';
+echo '</html>';
 ?>

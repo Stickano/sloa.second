@@ -30,7 +30,7 @@ class ArrayHandler{
     }
 
     private function search_r($array, $key, $value, &$result){
-        if (!is_array($array)) 
+        if (!is_array($array))
             return;
 
         if (isset($array[$key]) && $array[$key] == $value)

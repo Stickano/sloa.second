@@ -34,7 +34,7 @@ if(!$key = $controller->checkId()){
                         $selected = null;
                         if(isset($_GET['kategori']) && strtolower($key['category']) == strtolower($_GET['kategori']))
                             $selected = "selected";
-                        echo'<option value="'.strtolower($key['category']).'" '.$selected.'>'.$key['category'].'</option>';
+                        echo'<option value="'.strtolower($key['category']).'" '.$selected.'>'.ucfirst($key['category']).'</option>';
                     }
                 echo'</select>';
 

@@ -30,7 +30,7 @@ class Time {
             return substr($date, 3, 2);
         if($val == "year")
             return substr($date, 6, 4);
-        
+
         return $date;
     }
 

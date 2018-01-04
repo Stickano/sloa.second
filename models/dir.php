@@ -3,7 +3,7 @@
 class Dir {
 
 	/**
-	 * List Files & Folders in a given Directory 
+	 * List Files & Folders in a given Directory
 	 * @param  string $dir Hold the path to the directory
 	 * @return string      Will first loop through Folders, then Files
 	 */
@@ -37,14 +37,14 @@ class Dir {
 				echo $file.'<br>';
 			}
 		}
-	}	
+	}
 
 
 	/**
      * Removes a folder and its content
      * @param  string $dir The directory to remove
-     * @return             No return value      
-     */     
+     * @return             No return value
+     */
 	public function rrmdir($dir) {
         if (is_dir($dir)) {
             $objects = scandir($dir);
@@ -52,7 +52,7 @@ class Dir {
                 if ($object != "." && $object != "..") {
                     if (filetype($dir."/".$object) == "dir")
                         rrmdir($dir."/".$object);
-                    else 
+                    else
                     	unlink   ($dir."/".$object);
                 };
             };

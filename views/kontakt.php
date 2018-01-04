@@ -13,7 +13,7 @@ if(isset($_POST['reset']))
 # Form values (send or reset)
 $val = $controller->getFormValues();
 
-# Stored values from failed attempts 
+# Stored values from failed attempts
 $failed = $controller->getFailedValues();
 $error = $controller->getError();
 
@@ -37,32 +37,32 @@ echo'<div class="row">';
 
             # Contact formula
             echo'<form method="post">';
-                echo'<input style="width:100%;" 
-                            type="text" 
-                            name="mail" 
-                            class="input-simple" 
-                            placeholder="Din E-mail" 
+                echo'<input style="width:100%;"
+                            type="text"
+                            name="mail"
+                            class="input-simple"
+                            placeholder="Din E-mail"
                             value="'.$failed['mail'].'" '.$val['disabled'].'>';
-                
-                echo'<input style="width:100%;" 
-                            type="text" 
-                            name="subject" 
-                            class="input-simple" 
-                            placeholder="Emne" 
+
+                echo'<input style="width:100%;"
+                            type="text"
+                            name="subject"
+                            class="input-simple"
+                            placeholder="Emne"
                             value="'.$failed['subject'].'" '.$val['disabled'].'>';
-                
-                echo'<textarea class="input-textarea" 
-                                style="width:100%; height:400px;" 
+
+                echo'<textarea class="input-textarea"
+                                style="width:100%; height:400px;"
                                 name="message"  '.$val['disabled'].'>'.$failed['txt'].'</textarea>';
-                
+
                 //TODO: Icon
-                echo'<input type="submit" 
-                            value="'.$val['value'].'" 
-                            class="input-button bg-'.$val['color'].' right" 
-                            style="width:50%;" 
+                echo'<input type="submit"
+                            value="'.$val['value'].'"
+                            class="input-button bg-'.$val['color'].' right"
+                            style="width:50%;"
                             name="'.$val['name'].'">';
             echo'</form>';
-            
+
         echo'</div>';
     }
 

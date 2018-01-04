@@ -6,7 +6,7 @@ class Emoji {
 	 * Unicode Emojis
 	 * @param  int $val 	No. for smiley to return
 	 * @return string      all/single
-	 */	
+	 */
 	public function umoji($val=null) {
 		$emojis = array(
 				'(ʘ‿ʘ)',
