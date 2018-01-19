@@ -69,7 +69,7 @@ if (!$controller->checkId()) {
                 echo'</select>';
 
                 echo $singleton->spaces(3).'per side.';
-                echo'<input type="submit" class="hiddenSubmit" id="amountPerPage">';
+                echo'<input type="submit" class="hiddenSubmit" id="blogFilter">';
             echo'</form>';
         echo'</div>';
     echo'</div>';

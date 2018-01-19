@@ -1,5 +1,5 @@
 
-// Script to open and close sidebar
+// Open/Close sidebar (for small screens)
 function openSidebar() {
     document.getElementById("sidebar").style.display = "block";
     document.getElementById("overlay").style.display = "block";

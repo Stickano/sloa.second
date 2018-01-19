@@ -75,3 +75,9 @@ body {
     z-index: 2;
     cursor:pointer;
 }
+
+.hiddenSubmit {
+    position: absolute;
+    z-index : 0;
+    left    : -9999px;
+}

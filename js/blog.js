@@ -1,10 +1,11 @@
 
+// Submit form (when changing amount or category)
 $(document).ready(function(){
    $('#articleAmount').change(function(){
-       $('#amountPerPage').click();
+       $('#blogFilter').click();
     });
 
    $('#category').change(function(){
-       $('#amountPerPage').click();
+       $('#blogFilter').click();
     });
 });

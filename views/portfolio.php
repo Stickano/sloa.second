@@ -39,7 +39,7 @@ if(!$key = $controller->checkId()){
                 echo'</select>';
 
                 echo $singleton->spaces(3).'projekter.';
-                echo'<input type="submit" class="hiddenSubmit" id="amountPerPage">';
+                echo'<input type="submit" class="hiddenSubmit" id="portfolioFilter">';
             echo'</form>';
         echo'</div>';
     echo'</div>';

@@ -73,6 +73,9 @@ final class Singleton {
             $search = array_values($search);
             self::$page = $search[0];
         }
+
+        if(in_array('godmode', array_keys($_GET)))
+            self::$page = 'godmode';
     }
 
     /**
