@@ -25,6 +25,9 @@ class PageMeta {
         $this->db   = $db;
         $this->page = $page;
 
+        if (substr($this->page, 0, 5) == "admin")
+            $this->page = "godmode";
+
         self::setMeta();
         self::setContact();
         self::setSocialMedia();
@@ -38,6 +41,7 @@ class PageMeta {
         # Select the page to fetch meta for
         $files = scandir('controllers');
         $check = strtolower($this->page.".php");
+
         if(in_array($check, $files))
             $where = [substr($check, 0, -4) => 1];
 

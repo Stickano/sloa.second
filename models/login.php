@@ -110,7 +110,7 @@ class Login {
 		if(!password_verify($upass, $result[$this->upassRow]))
 			throw new Exception($this->password_failed);
 
-		$_SESSION['sloaLogged'] = $result['id'];
+		$_SESSION['sloaLogged'] = $result['peper'];
 	}
 }
 

@@ -115,6 +115,7 @@ echo '<script src="js/vue.js"></script>';
 echo '<script src="js/typical.js"></script>';
 
 # Load page specific JS document
+# TODO: remove admin/ when logged in?
 if (is_file('js/'.$singleton::$page.'.js'))
     echo '<script src="js/'.$singleton::$page.'.js"></script>';
 

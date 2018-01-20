@@ -8,6 +8,7 @@ require_once('models/meta.php');
 require_once('models/security.php');
 require_once('resources/sessionHandler.php');
 require_once('resources/credentials.php');
+require_once('resources/admin.php');
 
 final class Singleton {
 
@@ -23,8 +24,9 @@ final class Singleton {
     public static $meta;
     public static $session;
 
-    # View and Controller
+    # Goodies (Vies, Controller, JS etc)
     public static $page;
+    #public static $admin;
     public static $controller;
     public static $js;
 
@@ -65,25 +67,39 @@ final class Singleton {
      * This will determine which page(view) to load
      */
     private static function getPage(){
-        $pages = ['index','blog','info','portfolio','guider','kontakt', 'pregodmode', 'godmode'];
-        $search = array_intersect($pages, array_keys($_GET));
+        $pages      = ['index','blog','info','portfolio','guider','kontakt', 'pregodmode', 'godmode'];
+        $search     = array_intersect($pages, array_keys($_GET));
         self::$page = $pages[0];
 
         if($search){
-            $search = array_values($search);
+            $search     = array_values($search);
             self::$page = $search[0];
         }
 
-        if(in_array('godmode', array_keys($_GET)))
-            self::$page = 'godmode';
+        # Administrativ pages
+        if(in_array('godmode', array_keys($_GET))) {
+            self::$page         = 'godmode';
+            $pages              = ['godmode','index','blog','information','portfolio','guider','kontakt','profiler','meta','log'];
+            $search             = array_intersect($pages, array_keys($_GET));
+
+            if(sizeof($search) >= 2){
+                $search     = array_values($search);
+                self::$page = "admin/".$search[1];
+            }
+        }
     }
 
     /**
      * This will load the appropriate controller
      */
-    public static function pageController(){
+    private static function pageController(){
         require_once('controllers/'.self::$page.'.php');
-        $controller = ucfirst(self::$page).'Controller';
+
+        $controller = self::$page;
+        if (substr($controller,0,5) == "admin")
+            $controller = substr($controller, 6);
+
+        $controller       = ucfirst($controller).'Controller';
         self::$controller = new $controller(self::conn(), self::db(), self::$session);
     }
 
@@ -154,6 +170,7 @@ final class Singleton {
 
     /**
      * Sets the current and previous page for navigation purposes
+     * TODO: Spaghetti
      */
     private static function setPage() {
         if (self::$session->isset("nowPage") && self::$session->get("nowPage") != self::$instance->getUrl())

@@ -1,7 +1,5 @@
 <?php
 
-
-
 # Welcome, last login
 echo'<div class="row">';
     echo'<div class="col-12">';
@@ -20,13 +18,13 @@ echo'<div class="row">';
                 echo'<h3 style="margin-bottom:0;">Forsiden</h3>';
                 echo'<ul style="padding-left:5px;">';
                     echo'<li style="list-style:none;">';
-                        echo'<a href="?godmode&forsiden&velkomst" title="Velkomst Besked">Velkomst</a>';
+                        echo'<a href="?godmode&index&velkomst" title="Velkomst Besked">Velkomst</a>';
                     echo'</li>';
                     echo'<li style="list-style:none;">';
-                        echo'<a href="?godmode&forsiden&kontakt" title="Kontakt Muligheder">Kontakt</a>';
+                        echo'<a href="?godmode&index&kontakt" title="Kontakt Muligheder">Kontakt</a>';
                     echo'</li>';
                     echo'<li style="list-style:none;">';
-                        echo'<a href="?godmode&forsiden&support" title="Bidrag til sloa.dk">Support</a>';
+                        echo'<a href="?godmode&index&support" title="Bidrag til sloa.dk">Support</a>';
                     echo'</li>';
                 echo'</ul>';
             echo'</li>';
@@ -41,7 +39,7 @@ echo'<div class="row">';
                         echo'<a href="?godmode&blog&ny" title="Tilføj ny artikel">Tilføj</a>';
                     echo'</li>';
                     echo'<li style="list-style:none;">';
-                        echo'<a href="?godmode&blog&alle" title="Alle artikler">Kontakt</a>';
+                        echo'<a href="?godmode&blog&alle" title="Alle artikler">Vis Alle</a>';
                     echo'</li>';
                 echo'</ul>';
             echo'</li>';
